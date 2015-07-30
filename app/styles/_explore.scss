@@ -1,0 +1,21 @@
+.explore-container {
+  text-align: center;
+}
+
+.explore-saying {
+  text-align: center;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 10px;
+  display: inline-block;
+  width: 50%;
+  min-width: 400px;
+}
+
+.likeButton {
+  opacity: 0.3;
+  border: 2px solid black;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+}

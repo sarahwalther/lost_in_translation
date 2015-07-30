@@ -1,0 +1,45 @@
+{
+  "name": "Boilerplate",
+  "description": "Killer boilerplate with React, Flux, Firebase, React-router, sass and more",
+  "version": "0.0.0",
+  "devDependencies": {
+    "babel": "^5.2.9",
+    "babel-core": "^5.2.9",
+    "babel-loader": "^4.0.0",
+    "core-js": "^0.9.6",
+    "css-loader": "^0.9.1",
+    "extract-text-webpack-plugin": "^0.7.0",
+    "jasmine-core": "^2.3.0",
+    "jsx-loader": "^0.13.1",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-cli": "0.0.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sourcemap-loader": "^0.3.4",
+    "karma-webpack": "^1.5.0",
+    "node-bourbon": "^4.2.1-beta1",
+    "node-neat": "^1.7.1-beta1",
+    "node-sass": "^2.1.1",
+    "react-hot-loader": "^1.1.5",
+    "sass-loader": "^0.6.0",
+    "style-loader": "^0.12.1",
+    "webpack": "^1.8.10",
+    "webpack-dev-server": "^1.8.2"
+  },
+  "dependencies": {
+    "axios": "^0.4.2",
+    "firebase": "^2.2.2",
+    "flux": "^2.0.3",
+    "font-awesome": "^4.3.0",
+    "hasher": "^1.2.0",
+    "jquery": "^2.1.4",
+    "normalize.css": "^3.0.3",
+    "react": "^0.13.2"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.dev.js --inline --progress --colors --content-base public --history-api-fallback --hot",
+    "build": "webpack --config webpack.config.build.js --progress --colors",
+    "test": "karma start"
+  }
+}
