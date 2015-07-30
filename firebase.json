@@ -1,0 +1,9 @@
+{
+  "firebase": "lost-in-translation",
+  "public": "public",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
