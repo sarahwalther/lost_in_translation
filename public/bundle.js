@@ -1078,7 +1078,8 @@ webpackJsonp([0],{
 	    FIREBASE_HOST: "https://lost-in-translation.firebaseio.com/",
 	    GET_DATA: "GET_DATA",
 	    ADD_ITEM: "ADD_ITEM",
-	    REMOVE_ITEM: "REMOVE_ITEM"
+	    REMOVE_ITEM: "REMOVE_ITEM",
+	    ADD_LIKE: "ADD_LIKE"
 	};
 
 	module.exports = appConstants;
@@ -11043,7 +11044,6 @@ webpackJsonp([0],{
 	        this.refs.language.getDOMNode().value = "";
 	        this.refs.equivalentEnglishVersion.getDOMNode().value = "";
 	        this.refs.keyWords.getDOMNode().value = "";
-	        this.refs.likes.getDOMNode().value = "";
 	      }
 	    },
 	    render: {
@@ -11116,6 +11116,20 @@ webpackJsonp([0],{
 	            data: saying
 	        });
 	        storage.push(saying);
+	    },
+
+	    addLike: function addLike(index, key) {
+	        var updatedLikes;
+	        AppDispatcher.handleAction({
+	            actionType: appConstants.ADD_LIKE,
+	            index: index
+	        });
+	        storage.child(key).once("value", function (snapshot) {
+	            updatedLikes = snapshot.val().title.likes + 1;
+	            // debugger;
+	        });
+	        storage.child(key).child("title").update({ likes: updatedLikes });
+	        // debugger;
 	    },
 
 	    removeSaying: function removeSaying(index, key) {
@@ -11550,6 +11564,10 @@ webpackJsonp([0],{
 	    return _store.sayings.push(item);
 	};
 
+	var addLike = function (index) {
+	    return _store.sayings[index].title.likes++;
+	};
+
 	var removeSaying = function (index) {
 	    return _store.sayings.splice(index, 1);
 	};
@@ -11587,6 +11605,10 @@ webpackJsonp([0],{
 	            break;
 	        case appConstants.REMOVE_ITEM:
 	            removeSaying(action.data.index);
+	            sayingStore.emit(CHANGE_EVENT);
+	            break;
+	        case appConstants.ADD_LIKE:
+	            addLike(action.index);
 	            sayingStore.emit(CHANGE_EVENT);
 	            break;
 	        default:
@@ -12068,8 +12090,10 @@ webpackJsonp([0],{
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 	var React = __webpack_require__(2);
+
 	var sayingActions = __webpack_require__(174);
 	var sayingStore = __webpack_require__(180);
+
 	var Like = __webpack_require__(184);
 
 	var SayingContainer = (function (_React$Component) {
@@ -12077,7 +12101,7 @@ webpackJsonp([0],{
 	        _classCallCheck(this, SayingContainer);
 
 	        _get(Object.getPrototypeOf(SayingContainer.prototype), "constructor", this).call(this);
-	        this.state = { sayings: [] };
+	        this.state = { sayings: [], liked: false };
 	        this.handleSubmit = this.handleSubmit.bind(this);
 	        this.changeContent = this.changeContent.bind(this);
 	    }
@@ -12096,6 +12120,13 @@ webpackJsonp([0],{
 	                sayingStore.removeChangeListener(this.changeContent);
 	            }
 	        },
+	        changeContent: {
+	            value: function changeContent() {
+	                this.setState({
+	                    sayings: this.returnSayings()
+	                });
+	            }
+	        },
 	        returnSayings: {
 	            value: function returnSayings() {
 	                return sayingStore.getSayings();
@@ -12108,6 +12139,12 @@ webpackJsonp([0],{
 	                });
 	            }
 	        },
+	        handleClick: {
+	            value: function handleClick(event) {
+
+	                this.setState({ liked: !this.state.liked });
+	            }
+	        },
 	        handleSubmit: {
 	            value: function handleSubmit(e) {
 	                e.preventDefault();
@@ -12116,11 +12153,6 @@ webpackJsonp([0],{
 	                    this.addItem(newSaying);
 	                }
 	                this.refs.newSaying.getDOMNode().value = "";
-	            }
-	        },
-	        handleClick: {
-	            value: function handleClick(event) {
-	                this.setState({ liked: !this.state.liked });
 	            }
 	        },
 	        handleDelete: {
@@ -12135,6 +12167,8 @@ webpackJsonp([0],{
 	                    return React.createElement(
 	                        "div",
 	                        null,
+	                        "Likes: ",
+	                        item.title.likes,
 	                        React.createElement(
 	                            "div",
 	                            null,
@@ -12165,18 +12199,13 @@ webpackJsonp([0],{
 	                            "div",
 	                            null,
 	                            item.title.language
-	                        )
+	                        ),
+	                        React.createElement(Like, { index: index, fbKey: item.key })
 	                    );
 	                });
 
 	                var randomItem = sayings[Math.floor(Math.random() * sayings.length)];
 
-	                var test = function test() {
-	                    return React.createElement(Like, null);
-	                };
-	                var index = 1;
-	                var item = 2;
-	                var cssSelector = this.state.liked ? "likeButton" : "";
 	                return React.createElement(
 	                    "div",
 	                    { className: "explore-container" },
@@ -12189,18 +12218,9 @@ webpackJsonp([0],{
 	                    React.createElement(
 	                        "div",
 	                        { className: "explore-saying" },
-	                        randomItem,
-	                        React.createElement(Like, { handleClick: this.handleClick })
+	                        randomItem
 	                    )
 	                );
-	            }
-	        },
-	        changeContent: {
-	            value: function changeContent() {
-	                // debugger;
-	                this.setState({
-	                    sayings: this.returnSayings()
-	                });
 	            }
 	        }
 	    });
@@ -12219,46 +12239,34 @@ webpackJsonp([0],{
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 	var React = __webpack_require__(2);
-
-	var likeActions = __webpack_require__(185);
+	var sayingActions = __webpack_require__(174);
 
 	var LikeButton = (function (_React$Component) {
 	  function LikeButton() {
 	    _classCallCheck(this, LikeButton);
 
-	    _get(Object.getPrototypeOf(LikeButton.prototype), "constructor", this).call(this);
-	    this.state = { liked: false };
-	    // this.handleClick = handleClick.bind(this);
-	    // this.changeContent = this.changeContent.bind(this);
+	    // super();
+	    this._changeContent = this._changeContent.bind(this);
 	  }
 
 	  _inherits(LikeButton, _React$Component);
 
 	  _createClass(LikeButton, {
-	    handleClick: {
-
-	      // handleClick(e) {
-	      //   this.setState({liked: !this.state.liked});
-	      //   // likeActions.addLike(this)
-	      // }
-
-	      value: function handleClick(event) {
-	        this.setState({ liked: !this.state.liked });
+	    _changeContent: {
+	      value: function _changeContent() {
+	        sayingActions.addLike(this.props.index, this.props.fbKey);
 	      }
 	    },
 	    render: {
 	      value: function render() {
-	        var cssSelector = this.state.liked ? "" : "likeButton";
 	        return React.createElement(
 	          "p",
-	          { className: cssSelector, onClick: this.handleClick },
+	          { className: "likeButton", onClick: this._changeContent },
 	          "💚 Favorite"
 	        );
 	      }
@@ -12269,70 +12277,6 @@ webpackJsonp([0],{
 	})(React.Component);
 
 	module.exports = LikeButton;
-
-/***/ },
-
-/***/ 185:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var AppDispatcher = __webpack_require__(175);
-	var appConstants = __webpack_require__(162);
-	var firebaseUtils = __webpack_require__(179);
-	var authUtils = __webpack_require__(160);
-
-	var loggedIn = authUtils.isLoggedIn();
-	var uid = loggedIn && loggedIn.uid || "demo";
-
-	var storage = firebaseUtils.homeInstance().child("user").child(uid).child("sayings");
-	var userStorage = firebaseUtils.homeInstance().child("user");
-
-	var likeActions = {
-	    getSayingLikes: function getSayingLikes(sayings) {
-	        storage.on("value", function (snapshot) {
-	            AppDispatcher.handleAction({
-	                actionType: appConstants.GET_DATA,
-	                data: {
-	                    list: firebaseUtils.toArray(snapshot.val())
-	                }
-	            });
-	        });
-	    },
-
-	    getUserLikes: function getUserLikes(user) {
-	        storage.on("value", function (snapshot) {
-	            AppDispatcher.handleAction({
-	                actionType: appConstants.GET_DATA,
-	                data: {
-	                    list: firebaseUtils.toArray(snapshot.val())
-	                }
-	            });
-	        });
-	    },
-
-	    addLike: function addLike(saying) {
-
-	        var oldSayings = getSayingLikes(saying);
-	        debugger;
-	        AppDispatcher.handleAction({
-	            actionType: appConstants.ADD_ITEM,
-	            data: saying
-	        });
-	        storage.update(saying);
-	    },
-
-	    removeSaying: function removeSaying(index, key) {
-	        AppDispatcher.handleAction({
-	            actionType: appConstants.REMOVE_ITEM,
-	            data: index
-	        });
-	        storage.child(key).remove();
-	    }
-
-	};
-
-	module.exports = likeActions;
 
 /***/ }
 

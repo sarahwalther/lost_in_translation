@@ -1,13 +1,16 @@
 const React = require('react');
+
 let sayingActions = require('../../actions/sayingActions');
 let sayingStore = require('../../stores/sayingStore');
+
+
 let Like = require('./Like');
 
 class SayingContainer extends React.Component {
 
     constructor() {
         super();
-        this.state = { sayings: [] };
+        this.state = { sayings: [], liked: false };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeContent = this.changeContent.bind(this);
     }
@@ -21,6 +24,12 @@ class SayingContainer extends React.Component {
         sayingStore.removeChangeListener(this.changeContent);
     }
 
+    changeContent() {
+        this.setState({
+            sayings: this.returnSayings()
+        })
+    }
+
     returnSayings() {
         return sayingStore.getSayings();
     }
@@ -29,6 +38,12 @@ class SayingContainer extends React.Component {
         sayingActions.addItem({
             title: newSaying
         });
+    }
+
+
+    handleClick(event) {
+
+        this.setState({liked: !this.state.liked});
     }
 
     handleSubmit(e) {
@@ -40,9 +55,6 @@ class SayingContainer extends React.Component {
         this.refs.newSaying.getDOMNode().value = "";
     }
 
-    handleClick(event) {
-        this.setState({liked: !this.state.liked});
-    }
 
     handleDelete(index, key){
         sayingActions.removeSaying(index, key);
@@ -53,12 +65,14 @@ class SayingContainer extends React.Component {
         let sayings = this.state.sayings.map((item,index) => {
             return (
                 <div>
+                    Likes: {item.title.likes}
                     <div>{item.title.author}:</div>
                     <strong>{item.title.englishLiteral}</strong>
                     <div>{item.title.meaning}</div>
                     <div>{item.title.equivalentEnglishVersion}</div>
                     <div>{item.title.originalSaying}</div>
                     <div>{item.title.language}</div>
+                    <Like index={index} fbKey={item.key} />
 
                 </div>
             )
@@ -66,10 +80,8 @@ class SayingContainer extends React.Component {
 
         let randomItem = sayings[Math.floor(Math.random()*sayings.length)];
 
-        let test = function() { return <Like/> };
-        let index = 1;
-        let item = 2;
-        var cssSelector = this.state.liked ? 'likeButton' : '';
+
+
         return (
 
             <div className="explore-container">
@@ -80,20 +92,12 @@ class SayingContainer extends React.Component {
 
                 <div className="explore-saying">
                         { randomItem }
-                        <Like handleClick={this.handleClick}/>
                 </div>
 
 
 
             </div>
         )
-    }
-
-    changeContent() {
-        // debugger;
-        this.setState({
-            sayings: this.returnSayings()
-        })
     }
 
 }

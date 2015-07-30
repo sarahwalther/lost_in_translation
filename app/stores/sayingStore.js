@@ -13,6 +13,8 @@ let setSaying = (data) => _store.sayings = data;
 
 let addSaying = (item) => _store.sayings.push(item);
 
+let addLike = (index) => _store.sayings[index].title.likes++ ;
+
 let removeSaying = (index) => _store.sayings.splice(index, 1);
 
 let sayingStore = objectAssign({}, EventEmitter.prototype, {
@@ -40,6 +42,10 @@ AppDispatcher.register(function(payload){
             break;
         case appConstants.REMOVE_ITEM:
             removeSaying(action.data.index);
+            sayingStore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.ADD_LIKE:
+            addLike(action.index);
             sayingStore.emit(CHANGE_EVENT);
             break;
         default:

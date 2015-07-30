@@ -40,7 +40,6 @@ class AddSaying extends React.Component {
     this.refs.language.getDOMNode().value = "";
     this.refs.equivalentEnglishVersion.getDOMNode().value = "";
     this.refs.keyWords.getDOMNode().value = "";
-    this.refs.likes.getDOMNode().value = "";
   }
 
   render(){

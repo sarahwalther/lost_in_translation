@@ -1,31 +1,20 @@
 const React = require('react');
-
-let likeActions = require('../../actions/likeActions');
+let sayingActions = require('../../actions/sayingActions');
 
 class LikeButton extends React.Component {
 
-  constructor(){
-    super();
-    this.state = { liked: false };
-    // this.handleClick = handleClick.bind(this);
-    // this.changeContent = this.changeContent.bind(this);
+  constructor() {
+    // super();
+    this._changeContent = this._changeContent.bind(this);
   }
 
-  // handleClick(e) {
-  //   this.setState({liked: !this.state.liked});
-  //   // likeActions.addLike(this)
-  // }
-
-  handleClick(event) {
-    this.setState({liked: !this.state.liked});
+  _changeContent() {
+    sayingActions.addLike(this.props.index, this.props.fbKey);
   }
-
-
 
   render() {
-    var cssSelector = this.state.liked ? '' : 'likeButton';
     return (
-      <p className={cssSelector} onClick={this.handleClick}>
+      <p className="likeButton" onClick={this._changeContent}>
         💚 Favorite
       </p>
     );
