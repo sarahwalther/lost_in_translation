@@ -3,7 +3,6 @@ const React = require('react');
 let sayingActions = require('../../actions/sayingActions');
 let sayingStore = require('../../stores/sayingStore');
 
-
 let Like = require('./Like');
 
 class SayingContainer extends React.Component {

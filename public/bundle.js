@@ -1079,7 +1079,8 @@ webpackJsonp([0],{
 	    GET_DATA: "GET_DATA",
 	    ADD_ITEM: "ADD_ITEM",
 	    REMOVE_ITEM: "REMOVE_ITEM",
-	    ADD_LIKE: "ADD_LIKE"
+	    ADD_LIKE: "ADD_LIKE",
+	    ADD_FAVORITE: "ADD_FAVORITE"
 	};
 
 	module.exports = appConstants;
@@ -11095,8 +11096,10 @@ webpackJsonp([0],{
 	var AppDispatcher = __webpack_require__(175);
 	var appConstants = __webpack_require__(162);
 	var firebaseUtils = __webpack_require__(179);
+	var authUtils = __webpack_require__(160);
 
 	var storage = firebaseUtils.homeInstance().child("public").child("sayings");
+	var userStorage = firebaseUtils.homeInstance().child("user");
 
 	var sayingActions = {
 	    getSayings: function getSayings(sayings) {
@@ -11118,18 +11121,25 @@ webpackJsonp([0],{
 	        storage.push(saying);
 	    },
 
-	    addLike: function addLike(index, key) {
+	    addLike: function addLike(index, key, uid) {
 	        var updatedLikes;
+	        var currentSaying = storage.child(key);
 	        AppDispatcher.handleAction({
 	            actionType: appConstants.ADD_LIKE,
 	            index: index
 	        });
 	        storage.child(key).once("value", function (snapshot) {
 	            updatedLikes = snapshot.val().title.likes + 1;
-	            // debugger;
 	        });
 	        storage.child(key).child("title").update({ likes: updatedLikes });
-	        // debugger;
+
+	        AppDispatcher.handleAction({
+	            actionType: appConstants.ADD_FAVORITE,
+	            data: currentSaying
+	        });
+	        storage.child(key).once("value", function (snapshot) {
+	            userStorage.child(uid).child("likes").push(snapshot.val());
+	        });
 	    },
 
 	    removeSaying: function removeSaying(index, key) {
@@ -12245,6 +12255,10 @@ webpackJsonp([0],{
 
 	var React = __webpack_require__(2);
 	var sayingActions = __webpack_require__(174);
+	var authUtils = __webpack_require__(160);
+
+	var loggedIn = authUtils.isLoggedIn();
+	var uid = loggedIn && loggedIn.uid;
 
 	var LikeButton = (function (_React$Component) {
 	  function LikeButton() {
@@ -12259,7 +12273,7 @@ webpackJsonp([0],{
 	  _createClass(LikeButton, {
 	    _changeContent: {
 	      value: function _changeContent() {
-	        sayingActions.addLike(this.props.index, this.props.fbKey);
+	        sayingActions.addLike(this.props.index, this.props.fbKey, uid);
 	      }
 	    },
 	    render: {

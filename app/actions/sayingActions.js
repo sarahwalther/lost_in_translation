@@ -1,8 +1,10 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
+let authUtils = require('../utils/authUtils');
 
 let storage = firebaseUtils.homeInstance().child('public').child('sayings');
+let userStorage = firebaseUtils.homeInstance().child("user");
 
 let sayingActions = {
     getSayings(sayings) {
@@ -24,19 +26,25 @@ let sayingActions = {
         storage.push(saying);
     },
 
-    addLike(index, key) {
+    addLike(index, key, uid) {
         var updatedLikes;
+        let currentSaying = storage.child(key);
         AppDispatcher.handleAction({
             actionType: appConstants.ADD_LIKE,
             index
         });
         storage.child(key).once('value', (snapshot) => {
             updatedLikes = snapshot.val().title.likes+1;
-            // debugger;
-
         });
         storage.child(key).child('title').update({likes: updatedLikes});
-        // debugger;
+
+        AppDispatcher.handleAction({
+            actionType: appConstants.ADD_FAVORITE,
+            data: currentSaying
+        });
+        storage.child(key).once('value', (snapshot) => {
+            userStorage.child(uid).child("likes").push(snapshot.val());
+        });
 
     },
 

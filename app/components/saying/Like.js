@@ -1,5 +1,9 @@
 const React = require('react');
 let sayingActions = require('../../actions/sayingActions');
+let authUtils = require('../../utils/authUtils');
+
+let loggedIn = authUtils.isLoggedIn();
+let uid = (loggedIn && loggedIn.uid);
 
 class LikeButton extends React.Component {
 
@@ -9,7 +13,7 @@ class LikeButton extends React.Component {
   }
 
   _changeContent() {
-    sayingActions.addLike(this.props.index, this.props.fbKey);
+    sayingActions.addLike(this.props.index, this.props.fbKey, uid);
   }
 
   render() {
