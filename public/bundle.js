@@ -1075,7 +1075,7 @@ webpackJsonp([0],{
 
 	var appConstants = {
 
-	    FIREBASE_HOST: "https://ueberraschungsei.firebaseio.com/",
+	    FIREBASE_HOST: "https://lost-in-translation.firebaseio.com/",
 	    GET_DATA: "GET_DATA",
 	    ADD_ITEM: "ADD_ITEM",
 	    REMOVE_ITEM: "REMOVE_ITEM"
@@ -1104,13 +1104,13 @@ webpackJsonp([0],{
 	// top level components for layouts
 	var Navigation = __webpack_require__(168);
 	var Home = __webpack_require__(170);
-	var ListContainer = __webpack_require__(171);
-	var Login = __webpack_require__(164);
-	var Account = __webpack_require__(181);
-	var Saying = __webpack_require__(185);
-	var AddSaying = __webpack_require__(186);
-	var MySayings = __webpack_require__(189);
-	var ExploreSayings = __webpack_require__(190);
+	var Login = __webpack_require__(171);
+	var Account = __webpack_require__(164);
+	var Saying = __webpack_require__(172);
+	var AddSaying = __webpack_require__(173);
+	var MyFavorites = __webpack_require__(182);
+	var ExploreSayings = __webpack_require__(183);
+	var LikeButton = __webpack_require__(184);
 
 	var App = (function (_React$Component) {
 	    function App() {
@@ -1143,12 +1143,8 @@ webpackJsonp([0],{
 	                        ui = newSayingRoute;
 	                        break;
 
-	                    case "mysayings":
-	                        ui = mySayingsRoute;
-	                        break;
-
-	                    case "list":
-	                        ui = listRoute;
+	                    case "myfavorites":
+	                        ui = myFavoritesRoute;
 	                        break;
 
 	                    case "login":
@@ -1178,13 +1174,6 @@ webpackJsonp([0],{
 	    React.createElement(Home, null)
 	);
 
-	var listRoute = React.createElement(
-	    "div",
-	    null,
-	    React.createElement(Navigation, null),
-	    React.createElement(ListContainer, null)
-	);
-
 	var exploreRoute = React.createElement(
 	    "div",
 	    null,
@@ -1199,11 +1188,11 @@ webpackJsonp([0],{
 	    React.createElement(AddSaying, null)
 	);
 
-	var mySayingsRoute = React.createElement(
+	var myFavoritesRoute = React.createElement(
 	    "div",
 	    null,
 	    React.createElement(Navigation, null),
-	    React.createElement(MySayings, null)
+	    React.createElement(MyFavorites, null)
 	);
 
 	var loginRoute = React.createElement(
@@ -1231,8 +1220,6 @@ webpackJsonp([0],{
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
@@ -1240,67 +1227,31 @@ webpackJsonp([0],{
 	var React = __webpack_require__(2);
 	var authUtils = __webpack_require__(160);
 
-	var Login = (function (_React$Component) {
-	    function Login() {
-	        _classCallCheck(this, Login);
+	var user = authUtils.isLoggedIn();
 
-	        _get(Object.getPrototypeOf(Login.prototype), "constructor", this).call(this);
-	        this.state = {
-	            warning: ""
-	        };
+	var Account = (function (_React$Component) {
+	    function Account() {
+	        _classCallCheck(this, Account);
+
+	        if (_React$Component != null) {
+	            _React$Component.apply(this, arguments);
+	        }
 	    }
 
-	    _inherits(Login, _React$Component);
+	    _inherits(Account, _React$Component);
 
-	    _createClass(Login, {
-	        handleRegister: {
-	            value: function handleRegister(e) {
-	                var _this = this;
-
-	                var email = this.refs.email.getDOMNode().value;
-	                var pw = this.refs.pw.getDOMNode().value;
-	                authUtils.createUser({ email: email, password: pw }, {
-	                    warn: function (error) {
-	                        _this.setState({
-	                            warning: error.message
-	                        });
-	                    }
-	                });
-	                this.refs.email.getDOMNode().value = "";
-	                this.refs.pw.getDOMNode().value = "";
-	                e.preventDefault();
-	            }
-	        },
-	        handleLogin: {
-	            value: function handleLogin(e) {
-	                var _this = this;
-
-	                var email = this.refs.email.getDOMNode().value;
-	                var pw = this.refs.pw.getDOMNode().value;
-	                authUtils.loginWithPw({ email: email, password: pw }, {
-	                    warn: function (error) {
-	                        _this.setState({
-	                            warning: error.message
-	                        });
-	                    }
-	                });
-	                this.refs.email.getDOMNode().value = "";
-	                this.refs.pw.getDOMNode().value = "";
+	    _createClass(Account, {
+	        handleLogout: {
+	            value: function handleLogout(e) {
+	                authUtils.logout();
 	                e.preventDefault();
 	            }
 	        },
 	        render: {
 	            value: function render() {
 
-	                var warning = React.createElement(
-	                    "div",
-	                    { className: "flash-error" },
-	                    React.createElement(
-	                        "span",
-	                        null,
-	                        this.state.warning
-	                    )
-	                );
+	                var loggedIn = authUtils.isLoggedIn();
+	                var userEmail = loggedIn && loggedIn.password.email;
 
 	                return React.createElement(
 	                    "div",
@@ -1308,44 +1259,34 @@ webpackJsonp([0],{
 	                    React.createElement(
 	                        "h1",
 	                        null,
-	                        "Your Account"
+	                        "Account"
 	                    ),
-	                    this.state.warning ? warning : "",
 	                    React.createElement(
-	                        "form",
+	                        "p",
 	                        null,
+	                        "You signed up with email: ",
 	                        React.createElement(
-	                            "label",
+	                            "b",
 	                            null,
-	                            "Email"
+	                            userEmail
 	                        ),
-	                        React.createElement("input", { type: "text", ref: "email", placeholder: "Email" }),
-	                        React.createElement(
-	                            "label",
-	                            null,
-	                            "Password"
-	                        ),
-	                        React.createElement("input", { type: "password", ref: "pw", placeholder: "Password" }),
-	                        React.createElement(
-	                            "button",
-	                            { onClick: this.handleLogin.bind(this), className: "btn btn-action" },
-	                            "Login"
-	                        ),
-	                        React.createElement(
-	                            "button",
-	                            { onClick: this.handleRegister.bind(this), className: "btn btn-action" },
-	                            "Register"
-	                        )
-	                    )
+	                        " "
+	                    ),
+	                    React.createElement(
+	                        "button",
+	                        { onClick: this.handleLogout.bind(this), className: "btn-alert" },
+	                        "Log Out"
+	                    ),
+	                    React.createElement("hr", null)
 	                );
 	            }
 	        }
 	    });
 
-	    return Login;
+	    return Account;
 	})(React.Component);
 
-	module.exports = Login;
+	module.exports = Account;
 
 /***/ },
 
@@ -1382,7 +1323,7 @@ webpackJsonp([0],{
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();
-	exports.push([module.id, "@charset \"UTF-8\";\n/*! Main SCSS FILE */\nhtml {\n  box-sizing: border-box; }\n\n*, *::after, *::before {\n  box-sizing: inherit; }\n\n.btn-action {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #477dca;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em; }\n  .btn-action:hover, .btn-action:focus {\n    background-color: #2c5999;\n    color: #fff; }\n  .btn-action:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\n.btn-alert {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #F05F5C;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em; }\n  .btn-alert:hover, .btn-alert:focus {\n    background-color: #ea1a16;\n    color: #fff; }\n  .btn-alert:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\nfieldset {\n  background-color: #f7f7f7;\n  border: 1px solid #ddd;\n  margin: 0 0 0.75em;\n  padding: 1.5em; }\n\ninput, label, select {\n  display: block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em; }\n\nlabel {\n  font-weight: 600;\n  margin-bottom: 0.375em; }\n  label.required::after {\n    content: \"*\"; }\n  label abbr {\n    display: none; }\n\ninput[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"password\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"text\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], textarea, select[multiple=multiple], textarea {\n  background-color: #fff;\n  border: 1px solid #ddd;\n  border-radius: 3px;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  margin-bottom: 0.75em;\n  padding: 0.5em;\n  transition: border-color;\n  width: 100%; }\n  input[type=\"color\"]:hover, input[type=\"date\"]:hover, input[type=\"datetime\"]:hover, input[type=\"datetime-local\"]:hover, input[type=\"email\"]:hover, input[type=\"month\"]:hover, input[type=\"number\"]:hover, input[type=\"password\"]:hover, input[type=\"search\"]:hover, input[type=\"tel\"]:hover, input[type=\"text\"]:hover, input[type=\"time\"]:hover, input[type=\"url\"]:hover, input[type=\"week\"]:hover, textarea:hover, select[multiple=multiple]:hover, textarea:hover {\n    border-color: #c4c4c4; }\n  input[type=\"color\"]:focus, input[type=\"date\"]:focus, input[type=\"datetime\"]:focus, input[type=\"datetime-local\"]:focus, input[type=\"email\"]:focus, input[type=\"month\"]:focus, input[type=\"number\"]:focus, input[type=\"password\"]:focus, input[type=\"search\"]:focus, input[type=\"tel\"]:focus, input[type=\"text\"]:focus, input[type=\"time\"]:focus, input[type=\"url\"]:focus, input[type=\"week\"]:focus, textarea:focus, select[multiple=multiple]:focus, textarea:focus {\n    border-color: #477dca;\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);\n    outline: none; }\n\ntextarea {\n  resize: vertical; }\n\ninput[type=\"search\"] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none; }\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  display: inline;\n  margin-right: 0.375em; }\n\ninput[type=\"file\"] {\n  padding-bottom: 0.75em;\n  width: 100%; }\n\nselect {\n  margin-bottom: 1.5em;\n  max-width: 100%;\n  width: auto; }\n\nul, ol {\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\ndl {\n  margin-bottom: 0.75em; }\n  dl dt {\n    font-weight: bold;\n    margin-top: 0.75em; }\n  dl dd {\n    margin: 0; }\n\ntable {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  border-collapse: collapse;\n  margin: 0.75em 0;\n  table-layout: fixed;\n  width: 100%; }\n\nth {\n  border-bottom: 1px solid #b7b7b7;\n  font-weight: 600;\n  padding: 0.375em 0;\n  text-align: left; }\n\ntd {\n  border-bottom: 1px solid #ddd;\n  padding: 0.375em 0; }\n\ntr, td, th {\n  vertical-align: middle; }\n\nbody {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -webkit-font-smoothing: antialiased;\n  color: #333;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.5; }\n\nh1, h2, h3, h4, h5, h6 {\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.2;\n  margin: 0 0 0.75em; }\n\np {\n  margin: 0 0 0.75em; }\n\na {\n  color: #477dca;\n  text-decoration: none;\n  transition: color 0.1s linear; }\n  a:active, a:focus, a:hover {\n    color: #2c5999; }\n  a:active, a:focus {\n    outline: none; }\n\nhr {\n  border-bottom: 1px solid #ddd;\n  border-left: none;\n  border-right: none;\n  border-top: none;\n  margin: 1.5em 0; }\n\nimg, picture {\n  margin: 0;\n  max-width: 100%; }\n\nbody {\n  background: #fafafa; }\n\n.container {\n  padding: 2.125em 3.4375em; }\n\nsection {\n  max-width: 68em;\n  margin-left: auto;\n  margin-right: auto; }\n  section::after {\n    clear: both;\n    content: \"\";\n    display: table; }\n  section aside {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 23.23176%; }\n    section aside:last-child {\n      margin-right: 0; }\n  section article {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 74.41059%; }\n    section article:last-child {\n      margin-right: 0; }\n\n.centered-navigation {\n  background-color: #E7F1EC;\n  border-bottom: 1px solid #d4e6dd;\n  min-height: 60px;\n  width: 100%;\n  z-index: 9999; }\n  .centered-navigation .mobile-logo {\n    display: inline;\n    float: left;\n    max-height: 60px;\n    padding-left: 1em; }\n    .centered-navigation .mobile-logo img {\n      max-height: 60px;\n      opacity: .6;\n      padding: .8em 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .mobile-logo {\n        display: none; } }\n  .centered-navigation .centered-navigation-mobile-menu {\n    color: rgba(51, 51, 51, 0.7);\n    display: block;\n    float: right;\n    font-weight: 700;\n    line-height: 60px;\n    margin: 0;\n    padding-right: 1em;\n    text-decoration: none;\n    text-transform: uppercase; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .centered-navigation-mobile-menu {\n        display: none; } }\n    .centered-navigation .centered-navigation-mobile-menu:focus, .centered-navigation .centered-navigation-mobile-menu:hover {\n      color: #333; }\n  .centered-navigation .centered-navigation-wrapper {\n    max-width: 68em;\n    margin-left: auto;\n    margin-right: auto;\n    position: relative;\n    z-index: 999; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n  .centered-navigation ul.centered-navigation-menu {\n    -webkit-transform-style: preserve-3d;\n    clear: both;\n    display: none;\n    margin: 0 auto;\n    overflow: visible;\n    padding: 0;\n    width: 100%;\n    z-index: 99999; }\n    .centered-navigation ul.centered-navigation-menu.show {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.centered-navigation-menu {\n        display: block;\n        text-align: center; } }\n  @media screen and (min-width: 53.75em) {\n    .centered-navigation .nav-link:first-child {\n      margin-left: 2.2em; } }\n  .centered-navigation ul li.nav-link {\n    background: #E7F1EC;\n    display: block;\n    line-height: 60px;\n    overflow: hidden;\n    padding-right: 1em;\n    text-align: right;\n    width: 100%;\n    z-index: 9999; }\n    .centered-navigation ul li.nav-link a {\n      color: rgba(51, 51, 51, 0.7);\n      display: inline-block;\n      outline: none;\n      text-decoration: none; }\n      .centered-navigation ul li.nav-link a:focus, .centered-navigation ul li.nav-link a:hover {\n        color: #333; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul li.nav-link {\n        background: transparent;\n        display: inline;\n        line-height: 60px; }\n        .centered-navigation ul li.nav-link a {\n          padding-right: 1em; } }\n  .centered-navigation li.logo.nav-link {\n    display: none;\n    line-height: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.logo.nav-link {\n        display: inline; } }\n  .centered-navigation .logo img {\n    margin-bottom: -0.66667em;\n    max-height: 2em;\n    opacity: 0.6; }\n  .centered-navigation li.more.nav-link {\n    padding-right: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more.nav-link {\n        padding-right: 1em; } }\n    .centered-navigation li.more.nav-link > ul > li:first-child a {\n      padding-top: 1em; }\n    .centered-navigation li.more.nav-link a {\n      margin-right: 1em; }\n    .centered-navigation li.more.nav-link > a {\n      padding-right: 0.6em; }\n    .centered-navigation li.more.nav-link > a:after {\n      position: absolute;\n      top: auto;\n      right: -0.4em;\n      bottom: auto;\n      left: auto;\n      color: rgba(51, 51, 51, 0.7);\n      content: \"\\25BE\"; }\n  .centered-navigation li.more {\n    overflow: visible;\n    padding-right: 0; }\n    .centered-navigation li.more a {\n      padding-right: 1em; }\n    .centered-navigation li.more > a {\n      padding-right: 1.6em;\n      position: relative; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation li.more > a {\n          margin-right: 1em; } }\n      .centered-navigation li.more > a:after {\n        content: \"›\";\n        font-size: 1.2em;\n        position: absolute;\n        right: 0.5em; }\n    .centered-navigation li.more:focus > .submenu, .centered-navigation li.more:hover > .submenu {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more {\n        padding-right: 1em;\n        position: relative; } }\n  .centered-navigation ul.submenu {\n    display: none;\n    padding-left: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu {\n        left: -1em;\n        position: absolute;\n        top: 1.5em; } }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu .submenu {\n        left: 11.8em;\n        top: 0; } }\n    .centered-navigation ul.submenu li {\n      display: block;\n      padding-right: 0; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation ul.submenu li {\n          line-height: 46.15385px; }\n          .centered-navigation ul.submenu li:first-child > a {\n            border-top-left-radius: 3px;\n            border-top-right-radius: 3px; }\n          .centered-navigation ul.submenu li:last-child > a {\n            border-bottom-left-radius: 3px;\n            border-bottom-right-radius: 3px;\n            padding-bottom: .7em; } }\n      .centered-navigation ul.submenu li a {\n        background-color: #ddebe4;\n        display: inline-block;\n        text-align: right;\n        text-decoration: none;\n        width: 100%; }\n        @media screen and (min-width: 53.75em) {\n          .centered-navigation ul.submenu li a {\n            background-color: #E7F1EC;\n            padding-left: 1em;\n            text-align: left;\n            width: 12em; } }\n\n.flash-alert {\n  background-color: #fff6bf;\n  color: #8c7800;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-alert a {\n    color: #594c00;\n    text-decoration: underline; }\n    .flash-alert a:focus, .flash-alert a:hover {\n      color: black; }\n\n.flash-error {\n  background-color: #fbe3e4;\n  color: #96151b;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-error a {\n    color: #6a0f13;\n    text-decoration: underline; }\n    .flash-error a:focus, .flash-error a:hover {\n      color: #110203; }\n\n.flash-notice {\n  background-color: #e5edf8;\n  color: #244e87;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-notice a {\n    color: #19375f;\n    text-decoration: underline; }\n    .flash-notice a:focus, .flash-notice a:hover {\n      color: #04080e; }\n\n.flash-success {\n  background-color: #e6efc2;\n  color: #56651a;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-success a {\n    color: #333c10;\n    text-decoration: underline; }\n    .flash-success a:focus, .flash-success a:hover {\n      color: black; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n/*! Main SCSS FILE */\nhtml {\n  box-sizing: border-box; }\n\n*, *::after, *::before {\n  box-sizing: inherit; }\n\n.btn-action {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #477dca;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em; }\n  .btn-action:hover, .btn-action:focus {\n    background-color: #2c5999;\n    color: #fff; }\n  .btn-action:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\n.btn-alert {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #F78A88;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em; }\n  .btn-alert:hover, .btn-alert:focus {\n    background-color: #f24440;\n    color: #fff; }\n  .btn-alert:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\nfieldset {\n  background-color: #f7f7f7;\n  border: 1px solid #ddd;\n  margin: 0 0 0.75em;\n  padding: 1.5em; }\n\ninput, label, select {\n  display: block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em; }\n\nlabel {\n  font-weight: 600;\n  margin-bottom: 0.375em; }\n  label.required::after {\n    content: \"*\"; }\n  label abbr {\n    display: none; }\n\ninput[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"password\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"text\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], textarea, select[multiple=multiple], textarea {\n  background-color: #fff;\n  border: 1px solid #ddd;\n  border-radius: 3px;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  margin-bottom: 0.75em;\n  padding: 0.5em;\n  transition: border-color;\n  width: 100%; }\n  input[type=\"color\"]:hover, input[type=\"date\"]:hover, input[type=\"datetime\"]:hover, input[type=\"datetime-local\"]:hover, input[type=\"email\"]:hover, input[type=\"month\"]:hover, input[type=\"number\"]:hover, input[type=\"password\"]:hover, input[type=\"search\"]:hover, input[type=\"tel\"]:hover, input[type=\"text\"]:hover, input[type=\"time\"]:hover, input[type=\"url\"]:hover, input[type=\"week\"]:hover, textarea:hover, select[multiple=multiple]:hover, textarea:hover {\n    border-color: #c4c4c4; }\n  input[type=\"color\"]:focus, input[type=\"date\"]:focus, input[type=\"datetime\"]:focus, input[type=\"datetime-local\"]:focus, input[type=\"email\"]:focus, input[type=\"month\"]:focus, input[type=\"number\"]:focus, input[type=\"password\"]:focus, input[type=\"search\"]:focus, input[type=\"tel\"]:focus, input[type=\"text\"]:focus, input[type=\"time\"]:focus, input[type=\"url\"]:focus, input[type=\"week\"]:focus, textarea:focus, select[multiple=multiple]:focus, textarea:focus {\n    border-color: #477dca;\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);\n    outline: none; }\n\ntextarea {\n  resize: vertical; }\n\ninput[type=\"search\"] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none; }\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  display: inline;\n  margin-right: 0.375em; }\n\ninput[type=\"file\"] {\n  padding-bottom: 0.75em;\n  width: 100%; }\n\nselect {\n  margin-bottom: 1.5em;\n  max-width: 100%;\n  width: auto; }\n\nul, ol {\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\ndl {\n  margin-bottom: 0.75em; }\n  dl dt {\n    font-weight: bold;\n    margin-top: 0.75em; }\n  dl dd {\n    margin: 0; }\n\ntable {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  border-collapse: collapse;\n  margin: 0.75em 0;\n  table-layout: fixed;\n  width: 100%; }\n\nth {\n  border-bottom: 1px solid #b7b7b7;\n  font-weight: 600;\n  padding: 0.375em 0;\n  text-align: left; }\n\ntd {\n  border-bottom: 1px solid #ddd;\n  padding: 0.375em 0; }\n\ntr, td, th {\n  vertical-align: middle; }\n\nbody {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -webkit-font-smoothing: antialiased;\n  color: #333;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.5; }\n\nh1, h2, h3, h4, h5, h6 {\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.2;\n  margin: 0 0 0.75em; }\n\np {\n  margin: 0 0 0.75em; }\n\na {\n  color: #477dca;\n  text-decoration: none;\n  transition: color 0.1s linear; }\n  a:active, a:focus, a:hover {\n    color: #2c5999; }\n  a:active, a:focus {\n    outline: none; }\n\nhr {\n  border-bottom: 1px solid #ddd;\n  border-left: none;\n  border-right: none;\n  border-top: none;\n  margin: 1.5em 0; }\n\nimg, picture {\n  margin: 0;\n  max-width: 100%; }\n\nbody {\n  background: #fafafa; }\n\n.container {\n  padding: 2.125em 3.4375em; }\n\nsection {\n  max-width: 68em;\n  margin-left: auto;\n  margin-right: auto; }\n  section::after {\n    clear: both;\n    content: \"\";\n    display: table; }\n  section aside {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 23.23176%; }\n    section aside:last-child {\n      margin-right: 0; }\n  section article {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 74.41059%; }\n    section article:last-child {\n      margin-right: 0; }\n\n.centered-navigation {\n  background-color: #D3BEDB;\n  border-bottom: 1px solid #c6aad0;\n  min-height: 60px;\n  width: 100%;\n  z-index: 9999; }\n  .centered-navigation .mobile-logo {\n    display: inline;\n    float: left;\n    max-height: 60px;\n    padding-left: 1em; }\n    .centered-navigation .mobile-logo img {\n      max-height: 60px;\n      opacity: .6;\n      padding: .8em 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .mobile-logo {\n        display: none; } }\n  .centered-navigation .centered-navigation-mobile-menu {\n    color: rgba(51, 51, 51, 0.7);\n    display: block;\n    float: right;\n    font-weight: 700;\n    line-height: 60px;\n    margin: 0;\n    padding-right: 1em;\n    text-decoration: none;\n    text-transform: uppercase; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .centered-navigation-mobile-menu {\n        display: none; } }\n    .centered-navigation .centered-navigation-mobile-menu:focus, .centered-navigation .centered-navigation-mobile-menu:hover {\n      color: #333; }\n  .centered-navigation .centered-navigation-wrapper {\n    max-width: 68em;\n    margin-left: auto;\n    margin-right: auto;\n    position: relative;\n    z-index: 999; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n  .centered-navigation ul.centered-navigation-menu {\n    -webkit-transform-style: preserve-3d;\n    clear: both;\n    display: none;\n    margin: 0 auto;\n    overflow: visible;\n    padding: 0;\n    width: 100%;\n    z-index: 99999; }\n    .centered-navigation ul.centered-navigation-menu.show {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.centered-navigation-menu {\n        display: block;\n        text-align: center; } }\n  @media screen and (min-width: 53.75em) {\n    .centered-navigation .nav-link:first-child {\n      margin-left: 2.2em; } }\n  .centered-navigation ul li.nav-link {\n    background: #D3BEDB;\n    display: block;\n    line-height: 60px;\n    overflow: hidden;\n    padding-right: 1em;\n    text-align: right;\n    width: 100%;\n    z-index: 9999; }\n    .centered-navigation ul li.nav-link a {\n      color: rgba(51, 51, 51, 0.7);\n      display: inline-block;\n      outline: none;\n      text-decoration: none; }\n      .centered-navigation ul li.nav-link a:focus, .centered-navigation ul li.nav-link a:hover {\n        color: #333; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul li.nav-link {\n        background: transparent;\n        display: inline;\n        line-height: 60px; }\n        .centered-navigation ul li.nav-link a {\n          padding-right: 1em; } }\n  .centered-navigation li.logo.nav-link {\n    display: none;\n    line-height: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.logo.nav-link {\n        display: inline; } }\n  .centered-navigation .logo img {\n    margin-bottom: -0.66667em;\n    max-height: 2em;\n    opacity: 0.6; }\n  .centered-navigation li.more.nav-link {\n    padding-right: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more.nav-link {\n        padding-right: 1em; } }\n    .centered-navigation li.more.nav-link > ul > li:first-child a {\n      padding-top: 1em; }\n    .centered-navigation li.more.nav-link a {\n      margin-right: 1em; }\n    .centered-navigation li.more.nav-link > a {\n      padding-right: 0.6em; }\n    .centered-navigation li.more.nav-link > a:after {\n      position: absolute;\n      top: auto;\n      right: -0.4em;\n      bottom: auto;\n      left: auto;\n      color: rgba(51, 51, 51, 0.7);\n      content: \"\\25BE\"; }\n  .centered-navigation li.more {\n    overflow: visible;\n    padding-right: 0; }\n    .centered-navigation li.more a {\n      padding-right: 1em; }\n    .centered-navigation li.more > a {\n      padding-right: 1.6em;\n      position: relative; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation li.more > a {\n          margin-right: 1em; } }\n      .centered-navigation li.more > a:after {\n        content: \"›\";\n        font-size: 1.2em;\n        position: absolute;\n        right: 0.5em; }\n    .centered-navigation li.more:focus > .submenu, .centered-navigation li.more:hover > .submenu {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more {\n        padding-right: 1em;\n        position: relative; } }\n  .centered-navigation ul.submenu {\n    display: none;\n    padding-left: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu {\n        left: -1em;\n        position: absolute;\n        top: 1.5em; } }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu .submenu {\n        left: 11.8em;\n        top: 0; } }\n    .centered-navigation ul.submenu li {\n      display: block;\n      padding-right: 0; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation ul.submenu li {\n          line-height: 46.15385px; }\n          .centered-navigation ul.submenu li:first-child > a {\n            border-top-left-radius: 3px;\n            border-top-right-radius: 3px; }\n          .centered-navigation ul.submenu li:last-child > a {\n            border-bottom-left-radius: 3px;\n            border-bottom-right-radius: 3px;\n            padding-bottom: .7em; } }\n      .centered-navigation ul.submenu li a {\n        background-color: #ccb4d6;\n        display: inline-block;\n        text-align: right;\n        text-decoration: none;\n        width: 100%; }\n        @media screen and (min-width: 53.75em) {\n          .centered-navigation ul.submenu li a {\n            background-color: #D3BEDB;\n            padding-left: 1em;\n            text-align: left;\n            width: 12em; } }\n\n.explore-container {\n  text-align: center; }\n\n.explore-saying {\n  text-align: center;\n  border: 1px solid lightgrey;\n  border-radius: 4px;\n  padding: 10px;\n  display: inline-block;\n  width: 50%;\n  min-width: 400px; }\n\n.likeButton {\n  opacity: 0.3;\n  border: 2px solid black;\n  display: inline-block;\n  cursor: pointer;\n  padding: 5px; }\n\n.flash-alert {\n  background-color: #fff6bf;\n  color: #8c7800;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-alert a {\n    color: #594c00;\n    text-decoration: underline; }\n    .flash-alert a:focus, .flash-alert a:hover {\n      color: black; }\n\n.flash-error {\n  background-color: #fbe3e4;\n  color: #96151b;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-error a {\n    color: #6a0f13;\n    text-decoration: underline; }\n    .flash-error a:focus, .flash-error a:hover {\n      color: #110203; }\n\n.flash-notice {\n  background-color: #e5edf8;\n  color: #244e87;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-notice a {\n    color: #19375f;\n    text-decoration: underline; }\n    .flash-notice a:focus, .flash-notice a:hover {\n      color: #04080e; }\n\n.flash-success {\n  background-color: #e6efc2;\n  color: #56651a;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-success a {\n    color: #333c10;\n    text-decoration: underline; }\n    .flash-success a:focus, .flash-success a:hover {\n      color: black; }\n", ""]);
 
 /***/ },
 
@@ -1473,15 +1414,6 @@ webpackJsonp([0],{
 	                ),
 	                React.createElement(
 	                  "li",
-	                  { className: "nav-link" },
-	                  React.createElement(
-	                    "a",
-	                    { onClick: this.handleLink.bind(this, "list") },
-	                    "List"
-	                  )
-	                ),
-	                React.createElement(
-	                  "li",
 	                  { className: "nav-link more" },
 	                  React.createElement(
 	                    "a",
@@ -1505,39 +1437,8 @@ webpackJsonp([0],{
 	                      null,
 	                      React.createElement(
 	                        "a",
-	                        { onClick: this.handleLink.bind(this, "mysayings") },
-	                        "My Sayings"
-	                      )
-	                    ),
-	                    React.createElement(
-	                      "li",
-	                      { className: "more" },
-	                      React.createElement(
-	                        "a",
-	                        { href: "javascript:void(0)" },
-	                        "Item with submenu"
-	                      ),
-	                      React.createElement(
-	                        "ul",
-	                        { className: "submenu" },
-	                        React.createElement(
-	                          "li",
-	                          null,
-	                          React.createElement(
-	                            "a",
-	                            { href: "javascript:void(0)" },
-	                            "Sub-submenu Item"
-	                          )
-	                        ),
-	                        React.createElement(
-	                          "li",
-	                          null,
-	                          React.createElement(
-	                            "a",
-	                            { href: "javascript:void(0)" },
-	                            "Another Item"
-	                          )
-	                        )
+	                        { onClick: this.handleLink.bind(this, "myfavorites") },
+	                        "My Favorites"
 	                      )
 	                    )
 	                  )
@@ -10923,68 +10824,69 @@ webpackJsonp([0],{
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 	var React = __webpack_require__(2);
-	var ListItem = __webpack_require__(172);
-	var listActions = __webpack_require__(173);
-	var listStore = __webpack_require__(179);
+	var authUtils = __webpack_require__(160);
 
-	var ListContainer = (function (_React$Component) {
-	    function ListContainer() {
-	        _classCallCheck(this, ListContainer);
+	var Login = (function (_React$Component) {
+	    function Login() {
+	        _classCallCheck(this, Login);
 
-	        _get(Object.getPrototypeOf(ListContainer.prototype), "constructor", this).call(this);
-	        this.state = { list: [] };
-	        this.handleSubmit = this.handleSubmit.bind(this);
-	        this.changeContent = this.changeContent.bind(this);
+	        _get(Object.getPrototypeOf(Login.prototype), "constructor", this).call(this);
+	        this.state = {
+	            warning: ""
+	        };
 	    }
 
-	    _inherits(ListContainer, _React$Component);
+	    _inherits(Login, _React$Component);
 
-	    _createClass(ListContainer, {
-	        componentDidMount: {
-	            value: function componentDidMount() {
-	                listStore.addChangeListener(this.changeContent);
-	                listActions.getList();
-	            }
-	        },
-	        componentWillUnmount: {
-	            value: function componentWillUnmount() {
-	                listStore.removeChangeListener(this.changeContent);
-	            }
-	        },
-	        returnList: {
-	            value: function returnList() {
-	                return listStore.getList();
-	            }
-	        },
-	        addItem: {
-	            value: function addItem(newItem) {
-	                listActions.addItem({
-	                    title: newItem
+	    _createClass(Login, {
+	        handleRegister: {
+	            value: function handleRegister(e) {
+	                var _this = this;
+
+	                var email = this.refs.email.getDOMNode().value;
+	                var pw = this.refs.pw.getDOMNode().value;
+	                authUtils.createUser({ email: email, password: pw }, {
+	                    warn: function (error) {
+	                        _this.setState({
+	                            warning: error.message
+	                        });
+	                    }
 	                });
-	            }
-	        },
-	        handleSubmit: {
-	            value: function handleSubmit(e) {
+	                this.refs.email.getDOMNode().value = "";
+	                this.refs.pw.getDOMNode().value = "";
 	                e.preventDefault();
-	                var newItem = this.refs.newItem.getDOMNode().value;
-	                if (newItem !== "") {
-	                    this.addItem(newItem);
-	                }
-	                this.refs.newItem.getDOMNode().value = "";
 	            }
 	        },
-	        handleDelete: {
-	            value: function handleDelete(index, key) {
-	                listActions.removeItem(index, key);
+	        handleLogin: {
+	            value: function handleLogin(e) {
+	                var _this = this;
+
+	                var email = this.refs.email.getDOMNode().value;
+	                var pw = this.refs.pw.getDOMNode().value;
+	                authUtils.loginWithPw({ email: email, password: pw }, {
+	                    warn: function (error) {
+	                        _this.setState({
+	                            warning: error.message
+	                        });
+	                    }
+	                });
+	                this.refs.email.getDOMNode().value = "";
+	                this.refs.pw.getDOMNode().value = "";
+	                e.preventDefault();
 	            }
 	        },
 	        render: {
 	            value: function render() {
-	                var _this = this;
 
-	                var list = this.state.list.map(function (item, index) {
-	                    return React.createElement(ListItem, { key: index, item: item, onDelete: _this.handleDelete.bind(_this, index, item.key) });
-	                });
+	                var warning = React.createElement(
+	                    "div",
+	                    { className: "flash-error" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        this.state.warning
+	                    )
+	                );
 
 	                return React.createElement(
 	                    "div",
@@ -10992,62 +10894,44 @@ webpackJsonp([0],{
 	                    React.createElement(
 	                        "h1",
 	                        null,
-	                        "Public List"
+	                        "Your Account"
 	                    ),
+	                    this.state.warning ? warning : "",
 	                    React.createElement(
 	                        "form",
-	                        { onSubmit: this.handleSubmit },
-	                        React.createElement("input", { ref: "newItem", type: "text", placeholder: "New item" }),
-	                        React.createElement(
-	                            "button",
-	                            { className: "btn-action" },
-	                            "Submit"
-	                        )
-	                    ),
-	                    React.createElement("br", null),
-	                    React.createElement(
-	                        "table",
 	                        null,
 	                        React.createElement(
-	                            "thead",
+	                            "label",
 	                            null,
-	                            React.createElement(
-	                                "tr",
-	                                null,
-	                                React.createElement(
-	                                    "th",
-	                                    null,
-	                                    "Item"
-	                                ),
-	                                React.createElement(
-	                                    "th",
-	                                    null,
-	                                    "Delete"
-	                                )
-	                            )
+	                            "Email"
+	                        ),
+	                        React.createElement("input", { type: "text", ref: "email", placeholder: "Email" }),
+	                        React.createElement(
+	                            "label",
+	                            null,
+	                            "Password"
+	                        ),
+	                        React.createElement("input", { type: "password", ref: "pw", placeholder: "Password" }),
+	                        React.createElement(
+	                            "button",
+	                            { onClick: this.handleLogin.bind(this), className: "btn btn-action" },
+	                            "Login"
 	                        ),
 	                        React.createElement(
-	                            "tbody",
-	                            null,
-	                            list
+	                            "button",
+	                            { onClick: this.handleRegister.bind(this), className: "btn btn-action" },
+	                            "Register"
 	                        )
 	                    )
 	                );
 	            }
-	        },
-	        changeContent: {
-	            value: function changeContent() {
-	                this.setState({
-	                    list: this.returnList()
-	                });
-	            }
 	        }
 	    });
 
-	    return ListContainer;
+	    return Login;
 	})(React.Component);
 
-	module.exports = ListContainer;
+	module.exports = Login;
 
 /***/ },
 
@@ -11064,46 +10948,38 @@ webpackJsonp([0],{
 
 	var React = __webpack_require__(2);
 
-	var ListItem = (function (_React$Component) {
-	    function ListItem() {
-	        _classCallCheck(this, ListItem);
+	var Saying = (function (_React$Component) {
+	  function Saying() {
+	    _classCallCheck(this, Saying);
 
-	        if (_React$Component != null) {
-	            _React$Component.apply(this, arguments);
-	        }
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
 	    }
+	  }
 
-	    _inherits(ListItem, _React$Component);
+	  _inherits(Saying, _React$Component);
 
-	    _createClass(ListItem, {
-	        render: {
-	            value: function render() {
-	                return React.createElement(
-	                    "tr",
-	                    null,
-	                    React.createElement(
-	                        "td",
-	                        null,
-	                        this.props.item.title
-	                    ),
-	                    React.createElement(
-	                        "td",
-	                        null,
-	                        React.createElement(
-	                            "button",
-	                            { className: "btn-alert", onClick: this.props.onDelete },
-	                            "X"
-	                        )
-	                    )
-	                );
-	            }
-	        }
-	    });
+	  _createClass(Saying, {
+	    render: {
+	      value: function render() {
+	        return React.createElement(
+	          "div",
+	          null,
+	          React.createElement(
+	            "h1",
+	            null,
+	            "Explore"
+	          ),
+	          React.createElement("p", null)
+	        );
+	      }
+	    }
+	  });
 
-	    return ListItem;
+	  return Saying;
 	})(React.Component);
 
-	module.exports = ListItem;
+	module.exports = Saying;
 
 /***/ },
 
@@ -11112,34 +10988,137 @@ webpackJsonp([0],{
 
 	"use strict";
 
-	var AppDispatcher = __webpack_require__(174);
+	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+	var React = __webpack_require__(2);
+	var sayingActions = __webpack_require__(174);
+	var sayingStore = __webpack_require__(180);
+
+	var AddSaying = (function (_React$Component) {
+	  function AddSaying() {
+	    _classCallCheck(this, AddSaying);
+
+	    // super();
+	    this.handleSubmit = this.handleSubmit.bind(this);
+	    // this.changeContent = this.changeContent.bind(this);
+	  }
+
+	  _inherits(AddSaying, _React$Component);
+
+	  _createClass(AddSaying, {
+	    addSaying: {
+	      value: function addSaying(newSaying) {
+	        sayingActions.addSaying({
+	          title: newSaying
+	        });
+	      }
+	    },
+	    handleSubmit: {
+
+	      // console.log(this)
+
+	      value: function handleSubmit(e) {
+	        e.preventDefault();
+	        var newSaying = {
+	          author: this.refs.author.getDOMNode().value,
+	          englishLiteral: this.refs.englishLiteral.getDOMNode().value,
+	          meaning: this.refs.meaning.getDOMNode().value,
+	          originalSaying: this.refs.originalSaying.getDOMNode().value,
+	          equivalentEnglishVersion: this.refs.equivalentEnglishVersion.getDOMNode().value,
+	          language: this.refs.language.getDOMNode().value,
+	          keyWords: this.refs.keyWords.getDOMNode().value,
+	          likes: this.refs.likes.getDOMNode().value
+	        };
+
+	        this.addSaying(newSaying);
+
+	        this.refs.author.getDOMNode().value = "";
+	        this.refs.englishLiteral.getDOMNode().value = "";
+	        this.refs.meaning.getDOMNode().value = "";
+	        this.refs.originalSaying.getDOMNode().value = "";
+	        this.refs.language.getDOMNode().value = "";
+	        this.refs.equivalentEnglishVersion.getDOMNode().value = "";
+	        this.refs.keyWords.getDOMNode().value = "";
+	        this.refs.likes.getDOMNode().value = "";
+	      }
+	    },
+	    render: {
+	      value: function render() {
+	        return React.createElement(
+	          "div",
+	          null,
+	          React.createElement(
+	            "form",
+	            { onSubmit: this.handleSubmit },
+	            React.createElement("input", { type: "text", ref: "author", placeholder: "Author" }),
+	            React.createElement("input", { type: "text", ref: "englishLiteral", placeholder: "Literal English Translation" }),
+	            React.createElement("input", { type: "text", ref: "meaning", placeholder: "Meaning" }),
+	            React.createElement("input", { type: "text", ref: "originalSaying", placeholder: "Original Saying" }),
+	            React.createElement("input", { type: "text", ref: "language", placeholder: "Language" }),
+	            React.createElement("input", { type: "text", ref: "equivalentEnglishVersion", placeholder: "Equivalent English Version" }),
+	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "frustration" }),
+	            "Frustration",
+	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "lost" }),
+	            "Lost",
+	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "confusion" }),
+	            "Confusion",
+	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "luck" }),
+	            "Luck",
+	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "learning" }),
+	            "Learning",
+	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "funny" }),
+	            "Funny",
+	            React.createElement("input", { type: "hidden", ref: "likes", value: "0" }),
+	            React.createElement("input", { type: "submit" })
+	          )
+	        );
+	      }
+	    }
+	  });
+
+	  return AddSaying;
+	})(React.Component);
+
+	module.exports = AddSaying;
+
+/***/ },
+
+/***/ 174:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var AppDispatcher = __webpack_require__(175);
 	var appConstants = __webpack_require__(162);
-	var firebaseUtils = __webpack_require__(178);
+	var firebaseUtils = __webpack_require__(179);
 
-	var storage = firebaseUtils.homeInstance().child("public").child("list");
+	var storage = firebaseUtils.homeInstance().child("public").child("sayings");
 
-	var listActions = {
-	    getList: function getList(list) {
-
+	var sayingActions = {
+	    getSayings: function getSayings(sayings) {
 	        storage.on("value", function (snapshot) {
 	            AppDispatcher.handleAction({
 	                actionType: appConstants.GET_DATA,
 	                data: {
-	                    list: firebaseUtils.toArray(snapshot.val())
+	                    sayings: firebaseUtils.toArray(snapshot.val())
 	                }
 	            });
 	        });
 	    },
 
-	    addItem: function addItem(item) {
+	    addSaying: function addSaying(saying) {
 	        AppDispatcher.handleAction({
 	            actionType: appConstants.ADD_ITEM,
-	            data: item
+	            data: saying
 	        });
-	        storage.push(item);
+	        storage.push(saying);
 	    },
 
-	    removeItem: function removeItem(index, key) {
+	    removeSaying: function removeSaying(index, key) {
 	        AppDispatcher.handleAction({
 	            actionType: appConstants.REMOVE_ITEM,
 	            data: index
@@ -11149,16 +11128,16 @@ webpackJsonp([0],{
 
 	};
 
-	module.exports = listActions;
+	module.exports = sayingActions;
 
 /***/ },
 
-/***/ 174:
+/***/ 175:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Dispatcher = __webpack_require__(175).Dispatcher;
+	var Dispatcher = __webpack_require__(176).Dispatcher;
 	var AppDispatcher = new Dispatcher();
 
 	AppDispatcher.handleAction = function (action) {
@@ -11172,7 +11151,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 175:
+/***/ 176:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11184,12 +11163,12 @@ webpackJsonp([0],{
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(176)
+	module.exports.Dispatcher = __webpack_require__(177)
 
 
 /***/ },
 
-/***/ 176:
+/***/ 177:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -11206,7 +11185,7 @@ webpackJsonp([0],{
 
 	"use strict";
 
-	var invariant = __webpack_require__(177);
+	var invariant = __webpack_require__(178);
 
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -11446,7 +11425,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 177:
+/***/ 178:
 /***/ function(module, exports) {
 
 	/**
@@ -11506,7 +11485,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 178:
+/***/ 179:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11526,11 +11505,11 @@ webpackJsonp([0],{
 	    },
 
 	    addItem: function addItem(item) {
-	        this.homeInstance().child("list").push(item);
+	        this.homeInstance().child("sayings").push(item);
 	    },
 
 	    removeItem: function removeItem(key) {
-	        this.homeInstance().child("list").child(key).remove();
+	        this.homeInstance().child("sayings").child(key).remove();
 	    },
 
 	    toArray: function toArray(obj) {
@@ -11547,42 +11526,42 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 179:
+/***/ 180:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var AppDispatcher = __webpack_require__(174);
+	var AppDispatcher = __webpack_require__(175);
 	var appConstants = __webpack_require__(162);
 	var objectAssign = __webpack_require__(14);
-	var EventEmitter = __webpack_require__(180).EventEmitter;
+	var EventEmitter = __webpack_require__(181).EventEmitter;
 
 	var CHANGE_EVENT = "change";
 
 	var _store = {
-	    list: []
+	    sayings: []
 	};
 
-	var setList = function (data) {
-	    return _store.list = data;
+	var setSaying = function (data) {
+	    return _store.sayings = data;
 	};
 
-	var addItem = function (item) {
-	    return _store.list.push(item);
+	var addSaying = function (item) {
+	    return _store.sayings.push(item);
 	};
 
-	var removeItem = function (index) {
-	    return _store.list.splice(index, 1);
+	var removeSaying = function (index) {
+	    return _store.sayings.splice(index, 1);
 	};
 
-	var listStore = objectAssign({}, EventEmitter.prototype, {
+	var sayingStore = objectAssign({}, EventEmitter.prototype, {
 
-	    getList: function getList() {
-	        return _store.list;
+	    getSayings: function getSayings() {
+	        return _store.sayings;
 	    },
 
-	    getListCount: function getListCount() {
-	        return _store.list.length;
+	    getSayingsCount: function getSayingsCount() {
+	        return _store.saying.length;
 	    },
 
 	    addChangeListener: function addChangeListener(cb) {
@@ -11599,27 +11578,27 @@ webpackJsonp([0],{
 	    var action = payload.action;
 	    switch (action.actionType) {
 	        case appConstants.GET_DATA:
-	            setList(action.data.list);
-	            listStore.emit(CHANGE_EVENT);
+	            setSaying(action.data.sayings);
+	            sayingStore.emit(CHANGE_EVENT);
 	            break;
 	        case appConstants.ADD_ITEM:
-	            addItem(action.data);
-	            listStore.emit(CHANGE_EVENT);
+	            addSaying(action.data);
+	            sayingStore.emit(CHANGE_EVENT);
 	            break;
 	        case appConstants.REMOVE_ITEM:
-	            removeItem(action.data.index);
-	            listStore.emit(CHANGE_EVENT);
+	            removeSaying(action.data.index);
+	            sayingStore.emit(CHANGE_EVENT);
 	            break;
 	        default:
 	            return true;
 	    }
 	});
 
-	module.exports = listStore;
+	module.exports = sayingStore;
 
 /***/ },
 
-/***/ 180:
+/***/ 181:
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -11927,85 +11906,6 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 181:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-	var React = __webpack_require__(2);
-	var authUtils = __webpack_require__(160);
-	var MyList = __webpack_require__(182);
-
-	var user = authUtils.isLoggedIn();
-
-	var Account = (function (_React$Component) {
-	    function Account() {
-	        _classCallCheck(this, Account);
-
-	        if (_React$Component != null) {
-	            _React$Component.apply(this, arguments);
-	        }
-	    }
-
-	    _inherits(Account, _React$Component);
-
-	    _createClass(Account, {
-	        handleLogout: {
-	            value: function handleLogout(e) {
-	                authUtils.logout();
-	                e.preventDefault();
-	            }
-	        },
-	        render: {
-	            value: function render() {
-
-	                var loggedIn = authUtils.isLoggedIn();
-	                var userEmail = loggedIn && loggedIn.password.email;
-
-	                return React.createElement(
-	                    "div",
-	                    { className: "container" },
-	                    React.createElement(
-	                        "h1",
-	                        null,
-	                        "Account"
-	                    ),
-	                    React.createElement(
-	                        "p",
-	                        null,
-	                        "You signed up with email: ",
-	                        React.createElement(
-	                            "b",
-	                            null,
-	                            userEmail
-	                        ),
-	                        " "
-	                    ),
-	                    React.createElement(
-	                        "button",
-	                        { onClick: this.handleLogout.bind(this), className: "btn-alert" },
-	                        "Log Out"
-	                    ),
-	                    React.createElement("hr", null),
-	                    React.createElement(MyList, null)
-	                );
-	            }
-	        }
-	    });
-
-	    return Account;
-	})(React.Component);
-
-	module.exports = Account;
-
-/***/ },
-
 /***/ 182:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -12020,561 +11920,23 @@ webpackJsonp([0],{
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 	var React = __webpack_require__(2);
-	var ListItem = __webpack_require__(172);
-	var myListActions = __webpack_require__(183);
-	var myListStore = __webpack_require__(184);
-
-	var MyList = (function (_React$Component) {
-	    function MyList() {
-	        _classCallCheck(this, MyList);
-
-	        _get(Object.getPrototypeOf(MyList.prototype), "constructor", this).call(this);
-	        this.state = { list: [] };
-	        this.handleSubmit = this.handleSubmit.bind(this);
-	        this.changeContent = this.changeContent.bind(this);
-	    }
-
-	    _inherits(MyList, _React$Component);
-
-	    _createClass(MyList, {
-	        componentDidMount: {
-	            value: function componentDidMount() {
-	                myListStore.addChangeListener(this.changeContent);
-	                myListActions.getList();
-	            }
-	        },
-	        componentWillUnmount: {
-	            value: function componentWillUnmount() {
-	                myListStore.removeChangeListener(this.changeContent);
-	            }
-	        },
-	        returnList: {
-	            value: function returnList() {
-	                return myListStore.getList();
-	            }
-	        },
-	        addItem: {
-	            value: function addItem(newItem) {
-	                myListActions.addItem({
-	                    title: newItem
-	                });
-	            }
-	        },
-	        handleSubmit: {
-	            value: function handleSubmit(e) {
-	                e.preventDefault();
-	                var newItem = {
-	                    newItem: this.refs.newItem.getDOMNode().value,
-	                    blah: this.refs.blah.getDOMNode().value,
-	                    test: this.refs.test.getDOMNode().value
-	                };
-
-	                if (newItem !== "") {
-	                    this.addItem(newItem);
-	                }
-	                this.refs.newItem.getDOMNode().value = "";
-	                this.refs.blah.getDOMNode().value = "";
-	                this.refs.test.getDOMNode().value = "";
-	            }
-	        },
-	        handleDelete: {
-	            value: function handleDelete(index, key) {
-	                myListActions.removeItem(index, key);
-	            }
-	        },
-	        render: {
-	            value: function render() {
-	                var _this = this;
-
-	                var list = this.state.list.map(function (item, index) {
-	                    return React.createElement(ListItem, { key: index, item: item, onDelete: _this.handleDelete.bind(_this, index, item.key) });
-	                });
-
-	                return React.createElement(
-	                    "div",
-	                    null,
-	                    React.createElement(
-	                        "h1",
-	                        null,
-	                        "Private List"
-	                    ),
-	                    React.createElement(
-	                        "form",
-	                        { onSubmit: this.handleSubmit },
-	                        React.createElement("input", { ref: "newItem", type: "text", placeholder: "New item" }),
-	                        React.createElement("input", { ref: "blah", type: "text", placeholder: "New item" }),
-	                        React.createElement("input", { ref: "test", type: "text", placeholder: "New item" }),
-	                        React.createElement(
-	                            "button",
-	                            { className: "btn-action" },
-	                            "Submit"
-	                        )
-	                    ),
-	                    React.createElement("br", null),
-	                    React.createElement(
-	                        "table",
-	                        null,
-	                        React.createElement(
-	                            "thead",
-	                            null,
-	                            React.createElement(
-	                                "tr",
-	                                null,
-	                                React.createElement(
-	                                    "th",
-	                                    null,
-	                                    "Item"
-	                                ),
-	                                React.createElement(
-	                                    "th",
-	                                    null,
-	                                    "Delete"
-	                                )
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "tbody",
-	                            null,
-	                            list
-	                        )
-	                    )
-	                );
-	            }
-	        },
-	        changeContent: {
-	            value: function changeContent() {
-	                this.setState({
-	                    list: this.returnList()
-	                });
-	            }
-	        }
-	    });
-
-	    return MyList;
-	})(React.Component);
-
-	module.exports = MyList;
-
-/***/ },
-
-/***/ 183:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var AppDispatcher = __webpack_require__(174);
-	var appConstants = __webpack_require__(162);
-	var firebaseUtils = __webpack_require__(178);
-	var authUtils = __webpack_require__(160);
-
-	var loggedIn = authUtils.isLoggedIn();
-	var uid = loggedIn && loggedIn.uid || "demo";
-
-	var storage = firebaseUtils.homeInstance().child("user").child(uid).child("list");
-
-	var myListActions = {
-	    getList: function getList(list) {
-	        storage.on("value", function (snapshot) {
-	            AppDispatcher.handleAction({
-	                actionType: appConstants.GET_DATA,
-	                data: {
-	                    list: firebaseUtils.toArray(snapshot.val())
-	                }
-	            });
-	        });
-	    },
-
-	    addItem: function addItem(item) {
-	        AppDispatcher.handleAction({
-	            actionType: appConstants.ADD_ITEM,
-	            data: item
-	        });
-	        storage.push(item);
-	    },
-
-	    removeItem: function removeItem(index, key) {
-	        AppDispatcher.handleAction({
-	            actionType: appConstants.REMOVE_ITEM,
-	            data: index
-	        });
-	        storage.child(key).remove();
-	    }
-
-	};
-
-	module.exports = myListActions;
-
-/***/ },
-
-/***/ 184:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var AppDispatcher = __webpack_require__(174);
-	var appConstants = __webpack_require__(162);
-	var objectAssign = __webpack_require__(14);
-	var EventEmitter = __webpack_require__(180).EventEmitter;
-
-	var CHANGE_EVENT = "change";
-
-	var _store = {
-	    list: []
-	};
-
-	var setList = function (data) {
-	    return _store.list = data;
-	};
-
-	var addItem = function (item) {
-	    return _store.list.push(item);
-	};
-
-	var removeItem = function (index) {
-	    return _store.list.splice(index, 1);
-	};
-
-	var myListStore = objectAssign({}, EventEmitter.prototype, {
-
-	    getList: function getList() {
-	        return _store.list;
-	    },
-
-	    getListCount: function getListCount() {
-	        return _store.list.length;
-	    },
-
-	    addChangeListener: function addChangeListener(cb) {
-	        this.on(CHANGE_EVENT, cb);
-	    },
-
-	    removeChangeListener: function removeChangeListener(cb) {
-	        this.removeListener(CHANGE_EVENT, cb);
-	    }
-
-	});
-
-	AppDispatcher.register(function (payload) {
-	    var action = payload.action;
-	    switch (action.actionType) {
-	        case appConstants.GET_DATA:
-	            setList(action.data.list);
-	            myListStore.emit(CHANGE_EVENT);
-	            break;
-	        case appConstants.ADD_ITEM:
-	            addItem(action.data);
-	            myListStore.emit(CHANGE_EVENT);
-	            break;
-	        case appConstants.REMOVE_ITEM:
-	            removeItem(action.data.index);
-	            myListStore.emit(CHANGE_EVENT);
-	            break;
-	        default:
-	            return true;
-	    }
-	});
-
-	module.exports = myListStore;
-
-/***/ },
-
-/***/ 185:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-	var React = __webpack_require__(2);
-
-	var Saying = (function (_React$Component) {
-	  function Saying() {
-	    _classCallCheck(this, Saying);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(Saying, _React$Component);
-
-	  _createClass(Saying, {
-	    render: {
-	      value: function render() {
-	        return React.createElement(
-	          "div",
-	          null,
-	          React.createElement(
-	            "h1",
-	            null,
-	            "Explore"
-	          ),
-	          React.createElement("p", null)
-	        );
-	      }
-	    }
-	  });
-
-	  return Saying;
-	})(React.Component);
-
-	module.exports = Saying;
-
-/***/ },
-
-/***/ 186:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-	var React = __webpack_require__(2);
-	var sayingActions = __webpack_require__(187);
-	var sayingStore = __webpack_require__(188);
-
-	var AddSaying = (function (_React$Component) {
-	  function AddSaying() {
-	    _classCallCheck(this, AddSaying);
-
-	    // super();
-	    this.handleSubmit = this.handleSubmit.bind(this);
-	    // this.changeContent = this.changeContent.bind(this);
-	  }
-
-	  _inherits(AddSaying, _React$Component);
-
-	  _createClass(AddSaying, {
-	    addSaying: {
-	      value: function addSaying(newSaying) {
-	        sayingActions.addSaying({
-	          title: newSaying
-	        });
-	      }
-	    },
-	    handleSubmit: {
-
-	      // console.log(this)
-
-	      value: function handleSubmit(e) {
-	        e.preventDefault();
-	        var newSaying = {
-	          author: this.refs.author.getDOMNode().value,
-	          englishLiteral: this.refs.englishLiteral.getDOMNode().value,
-	          meaning: this.refs.meaning.getDOMNode().value,
-	          originalSaying: this.refs.originalSaying.getDOMNode().value,
-	          equivalentEnglishVersion: this.refs.equivalentEnglishVersion.getDOMNode().value,
-	          language: this.refs.language.getDOMNode().value,
-	          keyWords: this.refs.keyWords.getDOMNode().value
-	        };
-
-	        this.addSaying(newSaying);
-
-	        this.refs.author.getDOMNode().value = "";
-	        this.refs.englishLiteral.getDOMNode().value = "";
-	        this.refs.meaning.getDOMNode().value = "";
-	        this.refs.originalSaying.getDOMNode().value = "";
-	        this.refs.language.getDOMNode().value = "";
-	        this.refs.equivalentEnglishVersion.getDOMNode().value = "";
-	        this.refs.keyWords.getDOMNode().value = "";
-	      }
-	    },
-	    render: {
-	      value: function render() {
-	        return React.createElement(
-	          "div",
-	          null,
-	          React.createElement(
-	            "form",
-	            { onSubmit: this.handleSubmit },
-	            React.createElement("input", { type: "text", ref: "author", placeholder: "Author" }),
-	            React.createElement("input", { type: "text", ref: "englishLiteral", placeholder: "Literal English Translation" }),
-	            React.createElement("input", { type: "text", ref: "meaning", placeholder: "Meaning" }),
-	            React.createElement("input", { type: "text", ref: "originalSaying", placeholder: "Original Saying" }),
-	            React.createElement("input", { type: "text", ref: "language", placeholder: "Language" }),
-	            React.createElement("input", { type: "text", ref: "equivalentEnglishVersion", placeholder: "Equivalent English Version" }),
-	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "frustration" }),
-	            "Frustration",
-	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "lost" }),
-	            "Lost",
-	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "confusion" }),
-	            "Confusion",
-	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "luck" }),
-	            "Luck",
-	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "learning" }),
-	            "Learning",
-	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "funny" }),
-	            "Funny",
-	            React.createElement("input", { type: "submit" })
-	          )
-	        );
-	      }
-	    }
-	  });
-
-	  return AddSaying;
-	})(React.Component);
-
-	module.exports = AddSaying;
-
-/***/ },
-
-/***/ 187:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var AppDispatcher = __webpack_require__(174);
-	var appConstants = __webpack_require__(162);
-	var firebaseUtils = __webpack_require__(178);
-
-	var storage = firebaseUtils.homeInstance().child("public").child("sayings");
-
-	var sayingActions = {
-	    getSayings: function getSayings(sayings) {
-	        storage.on("value", function (snapshot) {
-	            AppDispatcher.handleAction({
-	                actionType: appConstants.GET_DATA,
-	                data: {
-	                    sayings: firebaseUtils.toArray(snapshot.val())
-	                }
-	            });
-	        });
-	    },
-
-	    addSaying: function addSaying(saying) {
-	        AppDispatcher.handleAction({
-	            actionType: appConstants.ADD_ITEM,
-	            data: saying
-	        });
-	        storage.push(saying);
-	    },
-
-	    removeSaying: function removeSaying(index, key) {
-	        AppDispatcher.handleAction({
-	            actionType: appConstants.REMOVE_ITEM,
-	            data: index
-	        });
-	        storage.child(key).remove();
-	    }
-
-	};
-
-	module.exports = sayingActions;
-
-/***/ },
-
-/***/ 188:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var AppDispatcher = __webpack_require__(174);
-	var appConstants = __webpack_require__(162);
-	var objectAssign = __webpack_require__(14);
-	var EventEmitter = __webpack_require__(180).EventEmitter;
-
-	var CHANGE_EVENT = "change";
-
-	var _store = {
-	    sayings: []
-	};
-
-	var setSaying = function (data) {
-	    return _store.sayings = data;
-	};
-
-	var addSaying = function (item) {
-	    return _store.sayings.push(item);
-	};
-
-	var removeSaying = function (index) {
-	    return _store.sayings.splice(index, 1);
-	};
-
-	var sayingStore = objectAssign({}, EventEmitter.prototype, {
-
-	    getSayings: function getSayings() {
-	        return _store.sayings;
-	    },
-
-	    getSayingsCount: function getSayingsCount() {
-	        return _store.saying.length;
-	    },
-
-	    addChangeListener: function addChangeListener(cb) {
-	        this.on(CHANGE_EVENT, cb);
-	    },
-
-	    removeChangeListener: function removeChangeListener(cb) {
-	        this.removeListener(CHANGE_EVENT, cb);
-	    }
-
-	});
-
-	AppDispatcher.register(function (payload) {
-	    var action = payload.action;
-	    switch (action.actionType) {
-	        case appConstants.GET_DATA:
-	            setSaying(action.data.sayings);
-	            sayingStore.emit(CHANGE_EVENT);
-	            break;
-	        case appConstants.ADD_ITEM:
-	            addSaying(action.data);
-	            sayingStore.emit(CHANGE_EVENT);
-	            break;
-	        case appConstants.REMOVE_ITEM:
-	            removeSaying(action.data.index);
-	            sayingStore.emit(CHANGE_EVENT);
-	            break;
-	        default:
-	            return true;
-	    }
-	});
-
-	module.exports = sayingStore;
-
-/***/ },
-
-/***/ 189:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-	var React = __webpack_require__(2);
-	var Saying = __webpack_require__(185);
-	var sayingActions = __webpack_require__(187);
-	var sayingStore = __webpack_require__(188);
-
-	var MySayings = (function (_React$Component) {
-	  function MySayings() {
-	    _classCallCheck(this, MySayings);
-
-	    _get(Object.getPrototypeOf(MySayings.prototype), "constructor", this).call(this);
+	var Saying = __webpack_require__(172);
+	var sayingActions = __webpack_require__(174);
+	var sayingStore = __webpack_require__(180);
+
+	var MyFavorites = (function (_React$Component) {
+	  function MyFavorites() {
+	    _classCallCheck(this, MyFavorites);
+
+	    _get(Object.getPrototypeOf(MyFavorites.prototype), "constructor", this).call(this);
 	    this.state = { sayings: [] };
 	    this.handleSubmit = this.handleSubmit.bind(this);
 	    this.changeContent = this.changeContent.bind(this);
 	  }
 
-	  _inherits(MySayings, _React$Component);
+	  _inherits(MyFavorites, _React$Component);
 
-	  _createClass(MySayings, {
+	  _createClass(MyFavorites, {
 	    componentDidMount: {
 	      value: function componentDidMount() {
 	        sayingStore.addChangeListener(this.changeContent);
@@ -12588,7 +11950,7 @@ webpackJsonp([0],{
 	    },
 	    returnSaying: {
 	      value: function returnSaying() {
-	        return sayingStore.getSaying();
+	        return sayingStore.getSayings();
 	      }
 	    },
 	    addSaying: {
@@ -12643,7 +12005,7 @@ webpackJsonp([0],{
 	          React.createElement(
 	            "h1",
 	            null,
-	            "Private List"
+	            "My Favorite Sayings"
 	          ),
 	          React.createElement("br", null),
 	          React.createElement(
@@ -12685,14 +12047,14 @@ webpackJsonp([0],{
 	    }
 	  });
 
-	  return MySayings;
+	  return MyFavorites;
 	})(React.Component);
 
-	module.exports = MySayings;
+	module.exports = MyFavorites;
 
 /***/ },
 
-/***/ 190:
+/***/ 183:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12706,8 +12068,9 @@ webpackJsonp([0],{
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 	var React = __webpack_require__(2);
-	var sayingActions = __webpack_require__(187);
-	var sayingStore = __webpack_require__(188);
+	var sayingActions = __webpack_require__(174);
+	var sayingStore = __webpack_require__(180);
+	var Like = __webpack_require__(184);
 
 	var SayingContainer = (function (_React$Component) {
 	    function SayingContainer() {
@@ -12755,6 +12118,11 @@ webpackJsonp([0],{
 	                this.refs.newSaying.getDOMNode().value = "";
 	            }
 	        },
+	        handleClick: {
+	            value: function handleClick(event) {
+	                this.setState({ liked: !this.state.liked });
+	            }
+	        },
 	        handleDelete: {
 	            value: function handleDelete(index, key) {
 	                sayingActions.removeSaying(index, key);
@@ -12768,6 +12136,12 @@ webpackJsonp([0],{
 	                        "div",
 	                        null,
 	                        React.createElement(
+	                            "div",
+	                            null,
+	                            item.title.author,
+	                            ":"
+	                        ),
+	                        React.createElement(
 	                            "strong",
 	                            null,
 	                            item.title.englishLiteral
@@ -12775,37 +12149,37 @@ webpackJsonp([0],{
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            "-",
-	                            item.title.author
+	                            item.title.meaning
 	                        ),
 	                        React.createElement(
-	                            "p",
+	                            "div",
 	                            null,
-	                            item.meaning
+	                            item.title.equivalentEnglishVersion
 	                        ),
 	                        React.createElement(
-	                            "p",
+	                            "div",
 	                            null,
-	                            item.equivalentEnglishVersion
+	                            item.title.originalSaying
 	                        ),
 	                        React.createElement(
-	                            "p",
+	                            "div",
 	                            null,
-	                            item.originalSaying
-	                        ),
-	                        React.createElement(
-	                            "p",
-	                            null,
-	                            item.language
+	                            item.title.language
 	                        )
 	                    );
 	                });
 
 	                var randomItem = sayings[Math.floor(Math.random() * sayings.length)];
 
+	                var test = function test() {
+	                    return React.createElement(Like, null);
+	                };
+	                var index = 1;
+	                var item = 2;
+	                var cssSelector = this.state.liked ? "likeButton" : "";
 	                return React.createElement(
 	                    "div",
-	                    { className: "explore" },
+	                    { className: "explore-container" },
 	                    React.createElement(
 	                        "h1",
 	                        null,
@@ -12813,31 +12187,10 @@ webpackJsonp([0],{
 	                    ),
 	                    React.createElement("br", null),
 	                    React.createElement(
-	                        "table",
-	                        null,
-	                        React.createElement(
-	                            "thead",
-	                            null,
-	                            React.createElement(
-	                                "tr",
-	                                null,
-	                                React.createElement(
-	                                    "th",
-	                                    null,
-	                                    "Saying"
-	                                ),
-	                                React.createElement(
-	                                    "th",
-	                                    null,
-	                                    "Delete"
-	                                )
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "tbody",
-	                            null,
-	                            randomItem
-	                        )
+	                        "div",
+	                        { className: "explore-saying" },
+	                        randomItem,
+	                        React.createElement(Like, { handleClick: this.handleClick })
 	                    )
 	                );
 	            }
@@ -12856,6 +12209,130 @@ webpackJsonp([0],{
 	})(React.Component);
 
 	module.exports = SayingContainer;
+
+/***/ },
+
+/***/ 184:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+	var React = __webpack_require__(2);
+
+	var likeActions = __webpack_require__(185);
+
+	var LikeButton = (function (_React$Component) {
+	  function LikeButton() {
+	    _classCallCheck(this, LikeButton);
+
+	    _get(Object.getPrototypeOf(LikeButton.prototype), "constructor", this).call(this);
+	    this.state = { liked: false };
+	    // this.handleClick = handleClick.bind(this);
+	    // this.changeContent = this.changeContent.bind(this);
+	  }
+
+	  _inherits(LikeButton, _React$Component);
+
+	  _createClass(LikeButton, {
+	    handleClick: {
+
+	      // handleClick(e) {
+	      //   this.setState({liked: !this.state.liked});
+	      //   // likeActions.addLike(this)
+	      // }
+
+	      value: function handleClick(event) {
+	        this.setState({ liked: !this.state.liked });
+	      }
+	    },
+	    render: {
+	      value: function render() {
+	        var cssSelector = this.state.liked ? "" : "likeButton";
+	        return React.createElement(
+	          "p",
+	          { className: cssSelector, onClick: this.handleClick },
+	          "💚 Favorite"
+	        );
+	      }
+	    }
+	  });
+
+	  return LikeButton;
+	})(React.Component);
+
+	module.exports = LikeButton;
+
+/***/ },
+
+/***/ 185:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var AppDispatcher = __webpack_require__(175);
+	var appConstants = __webpack_require__(162);
+	var firebaseUtils = __webpack_require__(179);
+	var authUtils = __webpack_require__(160);
+
+	var loggedIn = authUtils.isLoggedIn();
+	var uid = loggedIn && loggedIn.uid || "demo";
+
+	var storage = firebaseUtils.homeInstance().child("user").child(uid).child("sayings");
+	var userStorage = firebaseUtils.homeInstance().child("user");
+
+	var likeActions = {
+	    getSayingLikes: function getSayingLikes(sayings) {
+	        storage.on("value", function (snapshot) {
+	            AppDispatcher.handleAction({
+	                actionType: appConstants.GET_DATA,
+	                data: {
+	                    list: firebaseUtils.toArray(snapshot.val())
+	                }
+	            });
+	        });
+	    },
+
+	    getUserLikes: function getUserLikes(user) {
+	        storage.on("value", function (snapshot) {
+	            AppDispatcher.handleAction({
+	                actionType: appConstants.GET_DATA,
+	                data: {
+	                    list: firebaseUtils.toArray(snapshot.val())
+	                }
+	            });
+	        });
+	    },
+
+	    addLike: function addLike(saying) {
+
+	        var oldSayings = getSayingLikes(saying);
+	        debugger;
+	        AppDispatcher.handleAction({
+	            actionType: appConstants.ADD_ITEM,
+	            data: saying
+	        });
+	        storage.update(saying);
+	    },
+
+	    removeSaying: function removeSaying(index, key) {
+	        AppDispatcher.handleAction({
+	            actionType: appConstants.REMOVE_ITEM,
+	            data: index
+	        });
+	        storage.child(key).remove();
+	    }
+
+	};
+
+	module.exports = likeActions;
 
 /***/ }
 

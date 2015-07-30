@@ -467,7 +467,7 @@ html {
   -o-appearance: none;
   appearance: none;
   -webkit-font-smoothing: antialiased;
-  background-color: #F05F5C;
+  background-color: #F78A88;
   border-radius: 3px;
   border: none;
   color: #fff;
@@ -484,7 +484,7 @@ html {
   white-space: nowrap;
   margin-right: 0.6em; }
   .btn-alert:hover, .btn-alert:focus {
-    background-color: #ea1a16;
+    background-color: #f24440;
     color: #fff; }
   .btn-alert:disabled {
     cursor: not-allowed;
@@ -657,8 +657,8 @@ section {
       margin-right: 0; }
 
 .centered-navigation {
-  background-color: #E7F1EC;
-  border-bottom: 1px solid #d4e6dd;
+  background-color: #D3BEDB;
+  border-bottom: 1px solid #c6aad0;
   min-height: 60px;
   width: 100%;
   z-index: 9999; }
@@ -722,7 +722,7 @@ section {
     .centered-navigation .nav-link:first-child {
       margin-left: 2.2em; } }
   .centered-navigation ul li.nav-link {
-    background: #E7F1EC;
+    background: #D3BEDB;
     display: block;
     line-height: 60px;
     overflow: hidden;
@@ -821,17 +821,36 @@ section {
             border-bottom-right-radius: 3px;
             padding-bottom: .7em; } }
       .centered-navigation ul.submenu li a {
-        background-color: #ddebe4;
+        background-color: #ccb4d6;
         display: inline-block;
         text-align: right;
         text-decoration: none;
         width: 100%; }
         @media screen and (min-width: 53.75em) {
           .centered-navigation ul.submenu li a {
-            background-color: #E7F1EC;
+            background-color: #D3BEDB;
             padding-left: 1em;
             text-align: left;
             width: 12em; } }
+
+.explore-container {
+  text-align: center; }
+
+.explore-saying {
+  text-align: center;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 10px;
+  display: inline-block;
+  width: 50%;
+  min-width: 400px; }
+
+.likeButton {
+  opacity: 0.3;
+  border: 2px solid black;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px; }
 
 .flash-alert {
   background-color: #fff6bf;
