@@ -1082,7 +1082,8 @@ webpackJsonp([0],{
 	    ADD_LIKE: "ADD_LIKE",
 	    ADD_FAVORITE: "ADD_FAVORITE",
 	    GET_FAVORITES: "GET_FAVORITES",
-	    DELETE_FAVORITE: "DELETE_FAVORITE"
+	    DELETE_FAVORITE: "DELETE_FAVORITE",
+	    GET_POPULAR: "GET_POPULAR"
 	};
 
 	module.exports = appConstants;
@@ -1100,21 +1101,22 @@ webpackJsonp([0],{
 
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-	__webpack_require__(165);
-	__webpack_require__(167);
+	__webpack_require__(164);
+	__webpack_require__(166);
 
 	var React = __webpack_require__(2);
 
 	// top level components for layouts
-	var Navigation = __webpack_require__(168);
-	var Home = __webpack_require__(170);
-	var Login = __webpack_require__(171);
-	var Account = __webpack_require__(164);
+	var Navigation = __webpack_require__(167);
+	var Home = __webpack_require__(169);
+	var Login = __webpack_require__(170);
+	var Account = __webpack_require__(171);
 	var Saying = __webpack_require__(172);
 	var AddSaying = __webpack_require__(173);
 	var MyFavorites = __webpack_require__(182);
 	var ExploreSayings = __webpack_require__(184);
 	var LikeButton = __webpack_require__(185);
+	var Popular = __webpack_require__(186);
 
 	var App = (function (_React$Component) {
 	    function App() {
@@ -1149,6 +1151,10 @@ webpackJsonp([0],{
 
 	                    case "myfavorites":
 	                        ui = myFavoritesRoute;
+	                        break;
+
+	                    case "popular":
+	                        ui = popularRoute;
 	                        break;
 
 	                    case "login":
@@ -1199,6 +1205,13 @@ webpackJsonp([0],{
 	    React.createElement(MyFavorites, null)
 	);
 
+	var popularRoute = React.createElement(
+	    "div",
+	    null,
+	    React.createElement(Navigation, null),
+	    React.createElement(Popular, null)
+	);
+
 	var loginRoute = React.createElement(
 	    "div",
 	    null,
@@ -1218,90 +1231,13 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 164:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-	var React = __webpack_require__(2);
-	var authUtils = __webpack_require__(160);
-
-	var user = authUtils.isLoggedIn();
-
-	var Account = (function (_React$Component) {
-	    function Account() {
-	        _classCallCheck(this, Account);
-
-	        if (_React$Component != null) {
-	            _React$Component.apply(this, arguments);
-	        }
-	    }
-
-	    _inherits(Account, _React$Component);
-
-	    _createClass(Account, {
-	        handleLogout: {
-	            value: function handleLogout(e) {
-	                authUtils.logout();
-	                e.preventDefault();
-	            }
-	        },
-	        render: {
-	            value: function render() {
-
-	                var loggedIn = authUtils.isLoggedIn();
-	                var userEmail = loggedIn && loggedIn.password.email;
-
-	                return React.createElement(
-	                    "div",
-	                    { className: "container" },
-	                    React.createElement(
-	                        "h1",
-	                        null,
-	                        "Account"
-	                    ),
-	                    React.createElement(
-	                        "p",
-	                        null,
-	                        "You signed up with email: ",
-	                        React.createElement(
-	                            "b",
-	                            null,
-	                            userEmail
-	                        ),
-	                        " "
-	                    ),
-	                    React.createElement(
-	                        "button",
-	                        { onClick: this.handleLogout.bind(this), className: "btn-alert" },
-	                        "Log Out"
-	                    ),
-	                    React.createElement("hr", null)
-	                );
-	            }
-	        }
-	    });
-
-	    return Account;
-	})(React.Component);
-
-	module.exports = Account;
-
-/***/ },
-
-/***/ 165:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 166:
+/***/ 165:
 /***/ function(module, exports) {
 
 	module.exports = function() {
@@ -1323,15 +1259,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 167:
+/***/ 166:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(166)();
-	exports.push([module.id, "@charset \"UTF-8\";\n/*! Main SCSS FILE */\nhtml {\n  box-sizing: border-box; }\n\n*, *::after, *::before {\n  box-sizing: inherit; }\n\n.btn-action {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #477dca;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em;\n  margin: 10px; }\n  .btn-action:hover, .btn-action:focus {\n    background-color: #2c5999;\n    color: #fff; }\n  .btn-action:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\n.btn-alert {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #F78A88;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em;\n  margin: 10px; }\n  .btn-alert:hover, .btn-alert:focus {\n    background-color: #f24440;\n    color: #fff; }\n  .btn-alert:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\nfieldset {\n  background-color: #f7f7f7;\n  border: 1px solid #ddd;\n  margin: 0 0 0.75em;\n  padding: 1.5em; }\n\ninput, label, select {\n  display: block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em; }\n\nlabel {\n  font-weight: 600;\n  margin-bottom: 0.375em; }\n  label.required::after {\n    content: \"*\"; }\n  label abbr {\n    display: none; }\n\ninput[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"password\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"text\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], textarea, select[multiple=multiple], textarea {\n  background-color: #fff;\n  border: 1px solid #ddd;\n  border-radius: 3px;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  margin-bottom: 0.75em;\n  padding: 0.5em;\n  transition: border-color;\n  width: 100%; }\n  input[type=\"color\"]:hover, input[type=\"date\"]:hover, input[type=\"datetime\"]:hover, input[type=\"datetime-local\"]:hover, input[type=\"email\"]:hover, input[type=\"month\"]:hover, input[type=\"number\"]:hover, input[type=\"password\"]:hover, input[type=\"search\"]:hover, input[type=\"tel\"]:hover, input[type=\"text\"]:hover, input[type=\"time\"]:hover, input[type=\"url\"]:hover, input[type=\"week\"]:hover, textarea:hover, select[multiple=multiple]:hover, textarea:hover {\n    border-color: #c4c4c4; }\n  input[type=\"color\"]:focus, input[type=\"date\"]:focus, input[type=\"datetime\"]:focus, input[type=\"datetime-local\"]:focus, input[type=\"email\"]:focus, input[type=\"month\"]:focus, input[type=\"number\"]:focus, input[type=\"password\"]:focus, input[type=\"search\"]:focus, input[type=\"tel\"]:focus, input[type=\"text\"]:focus, input[type=\"time\"]:focus, input[type=\"url\"]:focus, input[type=\"week\"]:focus, textarea:focus, select[multiple=multiple]:focus, textarea:focus {\n    border-color: #477dca;\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);\n    outline: none; }\n\ntextarea {\n  resize: vertical; }\n\ninput[type=\"search\"] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none; }\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  display: inline;\n  margin-right: 0.375em;\n  margin: 10px; }\n\ninput[type=\"file\"] {\n  padding-bottom: 0.75em;\n  width: 100%; }\n\nselect {\n  margin-bottom: 1.5em;\n  max-width: 100%;\n  width: auto; }\n\nul, ol {\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\ndl {\n  margin-bottom: 0.75em; }\n  dl dt {\n    font-weight: bold;\n    margin-top: 0.75em; }\n  dl dd {\n    margin: 0; }\n\ntable {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  border-collapse: collapse;\n  margin: 0.75em 0;\n  table-layout: fixed;\n  width: 100%; }\n\nth {\n  border-bottom: 1px solid #b7b7b7;\n  font-weight: 600;\n  padding: 0.375em 2em;\n  text-align: left; }\n\ntd {\n  border-bottom: 1px solid #ddd;\n  padding: 0.375em 2em; }\n\ntr, td, th {\n  vertical-align: middle; }\n\nbody {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -webkit-font-smoothing: antialiased;\n  color: #333;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.5; }\n\nh1, h2, h3, h4, h5, h6 {\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.2;\n  margin: 0 0 0.75em; }\n\np {\n  margin: 0 0 0.75em; }\n\na {\n  color: #477dca;\n  text-decoration: none;\n  transition: color 0.1s linear; }\n  a:active, a:focus, a:hover {\n    color: #2c5999; }\n  a:active, a:focus {\n    outline: none; }\n\nhr {\n  border-bottom: 1px solid #ddd;\n  border-left: none;\n  border-right: none;\n  border-top: none;\n  margin: 1.5em 0; }\n\nimg, picture {\n  margin: 0;\n  max-width: 100%; }\n\nbody {\n  background: #fafafa; }\n\n.container {\n  padding: 2.125em 3.4375em; }\n\nsection {\n  max-width: 68em;\n  margin-left: auto;\n  margin-right: auto; }\n  section::after {\n    clear: both;\n    content: \"\";\n    display: table; }\n  section aside {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 23.23176%; }\n    section aside:last-child {\n      margin-right: 0; }\n  section article {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 74.41059%; }\n    section article:last-child {\n      margin-right: 0; }\n\nh1 {\n  padding-left: 1em;\n  padding-top: 1em; }\n\na {\n  cursor: pointer; }\n\nbutton {\n  cursor: pointer; }\n\n.centered-navigation {\n  background-color: #D3BEDB;\n  border-bottom: 1px solid #c6aad0;\n  min-height: 60px;\n  width: 100%;\n  z-index: 9999; }\n  .centered-navigation .mobile-logo {\n    display: inline;\n    float: left;\n    max-height: 60px;\n    padding-left: 1em; }\n    .centered-navigation .mobile-logo img {\n      max-height: 60px;\n      opacity: .6;\n      padding: .8em 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .mobile-logo {\n        display: none; } }\n  .centered-navigation .centered-navigation-mobile-menu {\n    color: rgba(51, 51, 51, 0.7);\n    display: block;\n    float: right;\n    font-weight: 700;\n    line-height: 60px;\n    margin: 0;\n    padding-right: 1em;\n    text-decoration: none;\n    text-transform: uppercase; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .centered-navigation-mobile-menu {\n        display: none; } }\n    .centered-navigation .centered-navigation-mobile-menu:focus, .centered-navigation .centered-navigation-mobile-menu:hover {\n      color: #333; }\n  .centered-navigation .centered-navigation-wrapper {\n    max-width: 68em;\n    margin-left: auto;\n    margin-right: auto;\n    position: relative;\n    z-index: 999; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n  .centered-navigation ul.centered-navigation-menu {\n    -webkit-transform-style: preserve-3d;\n    clear: both;\n    display: none;\n    margin: 0 auto;\n    overflow: visible;\n    padding: 0;\n    width: 100%;\n    z-index: 99999; }\n    .centered-navigation ul.centered-navigation-menu.show {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.centered-navigation-menu {\n        display: block;\n        text-align: center; } }\n  @media screen and (min-width: 53.75em) {\n    .centered-navigation .nav-link:first-child {\n      margin-left: 2.2em; } }\n  .centered-navigation ul li.nav-link {\n    background: #D3BEDB;\n    display: block;\n    line-height: 60px;\n    overflow: hidden;\n    padding-right: 1em;\n    text-align: right;\n    width: 100%;\n    z-index: 9999; }\n    .centered-navigation ul li.nav-link a {\n      color: rgba(51, 51, 51, 0.7);\n      display: inline-block;\n      outline: none;\n      text-decoration: none; }\n      .centered-navigation ul li.nav-link a:focus, .centered-navigation ul li.nav-link a:hover {\n        color: #333; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul li.nav-link {\n        background: transparent;\n        display: inline;\n        line-height: 60px; }\n        .centered-navigation ul li.nav-link a {\n          padding-right: 1em; } }\n  .centered-navigation li.logo.nav-link {\n    display: none;\n    line-height: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.logo.nav-link {\n        display: inline; } }\n  .centered-navigation .logo img {\n    margin-bottom: -0.66667em;\n    max-height: 2em;\n    opacity: 0.6; }\n  .centered-navigation li.more.nav-link {\n    padding-right: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more.nav-link {\n        padding-right: 1em; } }\n    .centered-navigation li.more.nav-link > ul > li:first-child a {\n      padding-top: 1em; }\n    .centered-navigation li.more.nav-link a {\n      margin-right: 1em; }\n    .centered-navigation li.more.nav-link > a {\n      padding-right: 0.6em; }\n    .centered-navigation li.more.nav-link > a:after {\n      position: absolute;\n      top: auto;\n      right: -0.4em;\n      bottom: auto;\n      left: auto;\n      color: rgba(51, 51, 51, 0.7);\n      content: \"\\25BE\"; }\n  .centered-navigation li.more {\n    overflow: visible;\n    padding-right: 0; }\n    .centered-navigation li.more a {\n      padding-right: 1em; }\n    .centered-navigation li.more > a {\n      padding-right: 1.6em;\n      position: relative; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation li.more > a {\n          margin-right: 1em; } }\n      .centered-navigation li.more > a:after {\n        content: \"›\";\n        font-size: 1.2em;\n        position: absolute;\n        right: 0.5em; }\n    .centered-navigation li.more:focus > .submenu, .centered-navigation li.more:hover > .submenu {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more {\n        padding-right: 1em;\n        position: relative; } }\n  .centered-navigation ul.submenu {\n    display: none;\n    padding-left: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu {\n        left: -1em;\n        position: absolute;\n        top: 1.5em; } }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu .submenu {\n        left: 11.8em;\n        top: 0; } }\n    .centered-navigation ul.submenu li {\n      display: block;\n      padding-right: 0; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation ul.submenu li {\n          line-height: 46.15385px; }\n          .centered-navigation ul.submenu li:first-child > a {\n            border-top-left-radius: 3px;\n            border-top-right-radius: 3px; }\n          .centered-navigation ul.submenu li:last-child > a {\n            border-bottom-left-radius: 3px;\n            border-bottom-right-radius: 3px;\n            padding-bottom: .7em; } }\n      .centered-navigation ul.submenu li a {\n        background-color: #ccb4d6;\n        display: inline-block;\n        text-align: right;\n        text-decoration: none;\n        width: 100%; }\n        @media screen and (min-width: 53.75em) {\n          .centered-navigation ul.submenu li a {\n            background-color: #D3BEDB;\n            padding-left: 1em;\n            text-align: left;\n            width: 12em; } }\n\n.explore-container {\n  text-align: center; }\n  .explore-container h1 {\n    padding-left: 0px; }\n\n.explore-saying {\n  text-align: center;\n  border: 1px solid lightgrey;\n  border-radius: 4px;\n  padding: 10px;\n  display: inline-block;\n  width: 50%;\n  min-width: 400px; }\n\n.likeButton {\n  opacity: 0.3;\n  border: 2px solid black;\n  display: inline-block;\n  cursor: pointer;\n  padding: 5px; }\n\n#next-button {\n  float: right;\n  width: 65px;\n  margin-top: -131px;\n  margin-right: 35px; }\n\n.flash-alert {\n  background-color: #fff6bf;\n  color: #8c7800;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-alert a {\n    color: #594c00;\n    text-decoration: underline; }\n    .flash-alert a:focus, .flash-alert a:hover {\n      color: black; }\n\n.flash-error {\n  background-color: #fbe3e4;\n  color: #96151b;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-error a {\n    color: #6a0f13;\n    text-decoration: underline; }\n    .flash-error a:focus, .flash-error a:hover {\n      color: #110203; }\n\n.flash-notice {\n  background-color: #e5edf8;\n  color: #244e87;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-notice a {\n    color: #19375f;\n    text-decoration: underline; }\n    .flash-notice a:focus, .flash-notice a:hover {\n      color: #04080e; }\n\n.flash-success {\n  background-color: #e6efc2;\n  color: #56651a;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-success a {\n    color: #333c10;\n    text-decoration: underline; }\n    .flash-success a:focus, .flash-success a:hover {\n      color: black; }\n", ""]);
+	exports = module.exports = __webpack_require__(165)();
+	exports.push([module.id, "@charset \"UTF-8\";\n/*! Main SCSS FILE */\nhtml {\n  box-sizing: border-box; }\n\n*, *::after, *::before {\n  box-sizing: inherit; }\n\n.btn-action {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #477dca;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em;\n  margin: 10px; }\n  .btn-action:hover, .btn-action:focus {\n    background-color: #2c5999;\n    color: #fff; }\n  .btn-action:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\n.btn-alert {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  -webkit-font-smoothing: antialiased;\n  background-color: #F78A88;\n  border-radius: 3px;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  font-weight: 600;\n  line-height: 1;\n  padding: 0.75em 1em;\n  text-decoration: none;\n  user-select: none;\n  vertical-align: middle;\n  white-space: nowrap;\n  margin-right: 0.6em;\n  margin: 10px; }\n  .btn-alert:hover, .btn-alert:focus {\n    background-color: #f24440;\n    color: #fff; }\n  .btn-alert:disabled {\n    cursor: not-allowed;\n    opacity: 0.5; }\n\nfieldset {\n  background-color: #f7f7f7;\n  border: 1px solid #ddd;\n  margin: 0 0 0.75em;\n  padding: 1.5em; }\n\ninput, label, select {\n  display: block;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em; }\n\nlabel {\n  font-weight: 600;\n  margin-bottom: 0.375em; }\n  label.required::after {\n    content: \"*\"; }\n  label abbr {\n    display: none; }\n\ninput[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"password\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"text\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], textarea, select[multiple=multiple], textarea {\n  background-color: #fff;\n  border: 1px solid #ddd;\n  border-radius: 3px;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  margin-bottom: 0.75em;\n  padding: 0.5em;\n  transition: border-color;\n  width: 100%; }\n  input[type=\"color\"]:hover, input[type=\"date\"]:hover, input[type=\"datetime\"]:hover, input[type=\"datetime-local\"]:hover, input[type=\"email\"]:hover, input[type=\"month\"]:hover, input[type=\"number\"]:hover, input[type=\"password\"]:hover, input[type=\"search\"]:hover, input[type=\"tel\"]:hover, input[type=\"text\"]:hover, input[type=\"time\"]:hover, input[type=\"url\"]:hover, input[type=\"week\"]:hover, textarea:hover, select[multiple=multiple]:hover, textarea:hover {\n    border-color: #c4c4c4; }\n  input[type=\"color\"]:focus, input[type=\"date\"]:focus, input[type=\"datetime\"]:focus, input[type=\"datetime-local\"]:focus, input[type=\"email\"]:focus, input[type=\"month\"]:focus, input[type=\"number\"]:focus, input[type=\"password\"]:focus, input[type=\"search\"]:focus, input[type=\"tel\"]:focus, input[type=\"text\"]:focus, input[type=\"time\"]:focus, input[type=\"url\"]:focus, input[type=\"week\"]:focus, textarea:focus, select[multiple=multiple]:focus, textarea:focus {\n    border-color: #477dca;\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);\n    outline: none; }\n\ntextarea {\n  resize: vertical; }\n\ninput[type=\"search\"] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none; }\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  display: inline;\n  margin-right: 0.375em;\n  margin: 10px; }\n\ninput[type=\"file\"] {\n  padding-bottom: 0.75em;\n  width: 100%; }\n\nselect {\n  margin-bottom: 1.5em;\n  max-width: 100%;\n  width: auto; }\n\nul, ol {\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\ndl {\n  margin-bottom: 0.75em; }\n  dl dt {\n    font-weight: bold;\n    margin-top: 0.75em; }\n  dl dd {\n    margin: 0; }\n\ntable {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  font-feature-settings: \"kern\", \"liga\", \"tnum\";\n  border-collapse: collapse;\n  margin: 0.75em 0;\n  table-layout: fixed;\n  width: 100%; }\n\nth {\n  border-bottom: 1px solid #b7b7b7;\n  font-weight: 600;\n  padding: 0.375em 2em;\n  text-align: left; }\n\ntd {\n  border-bottom: 1px solid #ddd;\n  padding: 0.375em 2em; }\n\ntr, td, th {\n  vertical-align: middle; }\n\nbody {\n  -webkit-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -moz-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -ms-font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  font-feature-settings: \"kern\", \"liga\", \"pnum\";\n  -webkit-font-smoothing: antialiased;\n  color: #333;\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.5; }\n\nh1, h2, h3, h4, h5, h6 {\n  font-family: \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n  font-size: 1em;\n  line-height: 1.2;\n  margin: 0 0 0.75em; }\n\np {\n  margin: 0 0 0.75em; }\n\na {\n  color: #477dca;\n  text-decoration: none;\n  transition: color 0.1s linear; }\n  a:active, a:focus, a:hover {\n    color: #2c5999; }\n  a:active, a:focus {\n    outline: none; }\n\nhr {\n  border-bottom: 1px solid #ddd;\n  border-left: none;\n  border-right: none;\n  border-top: none;\n  margin: 1.5em 0; }\n\nimg, picture {\n  margin: 0;\n  max-width: 100%; }\n\nbody {\n  background: #fafafa; }\n\n.container {\n  padding: 2.125em 3.4375em; }\n\nsection {\n  max-width: 68em;\n  margin-left: auto;\n  margin-right: auto; }\n  section::after {\n    clear: both;\n    content: \"\";\n    display: table; }\n  section aside {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 23.23176%; }\n    section aside:last-child {\n      margin-right: 0; }\n  section article {\n    float: left;\n    display: block;\n    margin-right: 2.35765%;\n    width: 74.41059%; }\n    section article:last-child {\n      margin-right: 0; }\n\nh1 {\n  padding-left: 1em;\n  padding-top: 1em; }\n\na {\n  cursor: pointer; }\n\nbutton {\n  cursor: pointer; }\n\n.centered-navigation {\n  background-color: #D3BEDB;\n  border-bottom: 1px solid #c6aad0;\n  min-height: 60px;\n  width: 100%;\n  z-index: 9999; }\n  .centered-navigation .mobile-logo {\n    display: inline;\n    float: left;\n    max-height: 60px;\n    padding-left: 1em; }\n    .centered-navigation .mobile-logo img {\n      max-height: 60px;\n      opacity: .6;\n      padding: .8em 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .mobile-logo {\n        display: none; } }\n  .centered-navigation .centered-navigation-mobile-menu {\n    color: rgba(51, 51, 51, 0.7);\n    display: block;\n    float: right;\n    font-weight: 700;\n    line-height: 60px;\n    margin: 0;\n    padding-right: 1em;\n    text-decoration: none;\n    text-transform: uppercase; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation .centered-navigation-mobile-menu {\n        display: none; } }\n    .centered-navigation .centered-navigation-mobile-menu:focus, .centered-navigation .centered-navigation-mobile-menu:hover {\n      color: #333; }\n  .centered-navigation .centered-navigation-wrapper {\n    max-width: 68em;\n    margin-left: auto;\n    margin-right: auto;\n    position: relative;\n    z-index: 999; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n    .centered-navigation .centered-navigation-wrapper::after {\n      clear: both;\n      content: \"\";\n      display: table; }\n  .centered-navigation ul.centered-navigation-menu {\n    -webkit-transform-style: preserve-3d;\n    clear: both;\n    display: none;\n    margin: 0 auto;\n    overflow: visible;\n    padding: 0;\n    width: 100%;\n    z-index: 99999; }\n    .centered-navigation ul.centered-navigation-menu.show {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.centered-navigation-menu {\n        display: block;\n        text-align: center; } }\n  @media screen and (min-width: 53.75em) {\n    .centered-navigation .nav-link:first-child {\n      margin-left: 2.2em; } }\n  .centered-navigation ul li.nav-link {\n    background: #D3BEDB;\n    display: block;\n    line-height: 60px;\n    overflow: hidden;\n    padding-right: 1em;\n    text-align: right;\n    width: 100%;\n    z-index: 9999; }\n    .centered-navigation ul li.nav-link a {\n      color: rgba(51, 51, 51, 0.7);\n      display: inline-block;\n      outline: none;\n      text-decoration: none; }\n      .centered-navigation ul li.nav-link a:focus, .centered-navigation ul li.nav-link a:hover {\n        color: #333; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul li.nav-link {\n        background: transparent;\n        display: inline;\n        line-height: 60px; }\n        .centered-navigation ul li.nav-link a {\n          padding-right: 1em; } }\n  .centered-navigation li.logo.nav-link {\n    display: none;\n    line-height: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.logo.nav-link {\n        display: inline; } }\n  .centered-navigation .logo img {\n    margin-bottom: -0.66667em;\n    max-height: 2em;\n    opacity: 0.6; }\n  .centered-navigation li.more.nav-link {\n    padding-right: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more.nav-link {\n        padding-right: 1em; } }\n    .centered-navigation li.more.nav-link > ul > li:first-child a {\n      padding-top: 1em; }\n    .centered-navigation li.more.nav-link a {\n      margin-right: 1em; }\n    .centered-navigation li.more.nav-link > a {\n      padding-right: 0.6em; }\n    .centered-navigation li.more.nav-link > a:after {\n      position: absolute;\n      top: auto;\n      right: -0.4em;\n      bottom: auto;\n      left: auto;\n      color: rgba(51, 51, 51, 0.7);\n      content: \"\\25BE\"; }\n  .centered-navigation li.more {\n    overflow: visible;\n    padding-right: 0; }\n    .centered-navigation li.more a {\n      padding-right: 1em; }\n    .centered-navigation li.more > a {\n      padding-right: 1.6em;\n      position: relative; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation li.more > a {\n          margin-right: 1em; } }\n      .centered-navigation li.more > a:after {\n        content: \"›\";\n        font-size: 1.2em;\n        position: absolute;\n        right: 0.5em; }\n    .centered-navigation li.more:focus > .submenu, .centered-navigation li.more:hover > .submenu {\n      display: block; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation li.more {\n        padding-right: 1em;\n        position: relative; } }\n  .centered-navigation ul.submenu {\n    display: none;\n    padding-left: 0; }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu {\n        left: -1em;\n        position: absolute;\n        top: 1.5em; } }\n    @media screen and (min-width: 53.75em) {\n      .centered-navigation ul.submenu .submenu {\n        left: 11.8em;\n        top: 0; } }\n    .centered-navigation ul.submenu li {\n      display: block;\n      padding-right: 0; }\n      @media screen and (min-width: 53.75em) {\n        .centered-navigation ul.submenu li {\n          line-height: 46.15385px; }\n          .centered-navigation ul.submenu li:first-child > a {\n            border-top-left-radius: 3px;\n            border-top-right-radius: 3px; }\n          .centered-navigation ul.submenu li:last-child > a {\n            border-bottom-left-radius: 3px;\n            border-bottom-right-radius: 3px;\n            padding-bottom: .7em; } }\n      .centered-navigation ul.submenu li a {\n        background-color: #ccb4d6;\n        display: inline-block;\n        text-align: right;\n        text-decoration: none;\n        width: 100%; }\n        @media screen and (min-width: 53.75em) {\n          .centered-navigation ul.submenu li a {\n            background-color: #D3BEDB;\n            padding-left: 1em;\n            text-align: left;\n            width: 12em; } }\n\n.explore-container {\n  text-align: center; }\n  .explore-container h1 {\n    padding-left: 0px; }\n\n.explore-saying {\n  text-align: center;\n  border: 1px solid lightgrey;\n  border-radius: 4px;\n  padding: 10px;\n  display: inline-block;\n  width: 50%;\n  min-width: 400px; }\n\n.likeButton {\n  opacity: 0.3;\n  border: 2px solid black;\n  display: inline-block;\n  cursor: pointer;\n  padding: 5px; }\n\n#next-button {\n  float: right;\n  width: 65px;\n  margin-top: -131px;\n  margin-right: 35px;\n  cursor: pointer; }\n\n.flash-alert {\n  background-color: #fff6bf;\n  color: #8c7800;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-alert a {\n    color: #594c00;\n    text-decoration: underline; }\n    .flash-alert a:focus, .flash-alert a:hover {\n      color: black; }\n\n.flash-error {\n  background-color: #fbe3e4;\n  color: #96151b;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-error a {\n    color: #6a0f13;\n    text-decoration: underline; }\n    .flash-error a:focus, .flash-error a:hover {\n      color: #110203; }\n\n.flash-notice {\n  background-color: #e5edf8;\n  color: #244e87;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-notice a {\n    color: #19375f;\n    text-decoration: underline; }\n    .flash-notice a:focus, .flash-notice a:hover {\n      color: #04080e; }\n\n.flash-success {\n  background-color: #e6efc2;\n  color: #56651a;\n  display: block;\n  font-weight: 600;\n  margin-bottom: 0.75em;\n  padding: 0.75em;\n  text-align: center; }\n  .flash-success a {\n    color: #333c10;\n    text-decoration: underline; }\n    .flash-success a:focus, .flash-success a:hover {\n      color: black; }\n", ""]);
 
 /***/ },
 
-/***/ 168:
+/***/ 167:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1343,7 +1279,7 @@ webpackJsonp([0],{
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 	var React = __webpack_require__(2);
-	var $ = __webpack_require__(169);
+	var $ = __webpack_require__(168);
 	var hasher = __webpack_require__(158);
 
 	var Navigation = (function (_React$Component) {
@@ -1418,6 +1354,15 @@ webpackJsonp([0],{
 	                ),
 	                React.createElement(
 	                  "li",
+	                  { className: "nav-link" },
+	                  React.createElement(
+	                    "a",
+	                    { onClick: this.handleLink.bind(this, "popular") },
+	                    "Most Popular"
+	                  )
+	                ),
+	                React.createElement(
+	                  "li",
 	                  { className: "nav-link more" },
 	                  React.createElement(
 	                    "a",
@@ -1471,7 +1416,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 169:
+/***/ 168:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10688,7 +10633,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 170:
+/***/ 169:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10814,7 +10759,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 171:
+/***/ 170:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10939,6 +10884,83 @@ webpackJsonp([0],{
 
 /***/ },
 
+/***/ 171:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+	var React = __webpack_require__(2);
+	var authUtils = __webpack_require__(160);
+
+	var user = authUtils.isLoggedIn();
+
+	var Account = (function (_React$Component) {
+	    function Account() {
+	        _classCallCheck(this, Account);
+
+	        if (_React$Component != null) {
+	            _React$Component.apply(this, arguments);
+	        }
+	    }
+
+	    _inherits(Account, _React$Component);
+
+	    _createClass(Account, {
+	        handleLogout: {
+	            value: function handleLogout(e) {
+	                authUtils.logout();
+	                e.preventDefault();
+	            }
+	        },
+	        render: {
+	            value: function render() {
+
+	                var loggedIn = authUtils.isLoggedIn();
+	                var userEmail = loggedIn && loggedIn.password.email;
+
+	                return React.createElement(
+	                    "div",
+	                    { className: "container" },
+	                    React.createElement(
+	                        "h1",
+	                        null,
+	                        "Account"
+	                    ),
+	                    React.createElement(
+	                        "p",
+	                        null,
+	                        "You signed up with email: ",
+	                        React.createElement(
+	                            "b",
+	                            null,
+	                            userEmail
+	                        ),
+	                        " "
+	                    ),
+	                    React.createElement(
+	                        "button",
+	                        { onClick: this.handleLogout.bind(this), className: "btn-alert" },
+	                        "Log Out"
+	                    ),
+	                    React.createElement("hr", null)
+	                );
+	            }
+	        }
+	    });
+
+	    return Account;
+	})(React.Component);
+
+	module.exports = Account;
+
+/***/ },
+
 /***/ 172:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -11002,6 +11024,8 @@ webpackJsonp([0],{
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
@@ -11014,9 +11038,8 @@ webpackJsonp([0],{
 	  function AddSaying() {
 	    _classCallCheck(this, AddSaying);
 
-	    // super();
+	    _get(Object.getPrototypeOf(AddSaying.prototype), "constructor", this).call(this);
 	    this.handleSubmit = this.handleSubmit.bind(this);
-	    // this.changeContent = this.changeContent.bind(this);
 	  }
 
 	  _inherits(AddSaying, _React$Component);
@@ -11024,15 +11047,10 @@ webpackJsonp([0],{
 	  _createClass(AddSaying, {
 	    addSaying: {
 	      value: function addSaying(newSaying) {
-	        sayingActions.addSaying({
-	          saying: newSaying
-	        });
+	        sayingActions.addSaying(newSaying);
 	      }
 	    },
 	    handleSubmit: {
-
-	      // console.log(this)
-
 	      value: function handleSubmit(e) {
 	        e.preventDefault();
 	        var newSaying = {
@@ -11043,7 +11061,7 @@ webpackJsonp([0],{
 	          equivalentEnglishVersion: this.refs.equivalentEnglishVersion.getDOMNode().value,
 	          language: this.refs.language.getDOMNode().value,
 	          keyWords: this.refs.keyWords.getDOMNode().value,
-	          likes: this.refs.likes.getDOMNode().value
+	          likes: 0
 	        };
 
 	        this.addSaying(newSaying);
@@ -11084,7 +11102,6 @@ webpackJsonp([0],{
 	            "Learning",
 	            React.createElement("input", { type: "checkbox", ref: "keyWords", name: "key_words", value: "funny" }),
 	            "Funny",
-	            React.createElement("input", { type: "hidden", ref: "likes", value: "0" }),
 	            React.createElement("br", null),
 	            React.createElement("br", null),
 	            React.createElement("input", { className: "btn-alert", type: "submit" })
@@ -11145,9 +11162,9 @@ webpackJsonp([0],{
 	            index: index
 	        });
 	        storage.child(key).once("value", function (snapshot) {
-	            updatedLikes = parseInt(snapshot.val().saying.likes) + 1;
+	            updatedLikes = parseInt(snapshot.val().likes) + 1;
 	        });
-	        storage.child(key).child("saying").update({ likes: updatedLikes });
+	        storage.child(key).update({ likes: updatedLikes });
 
 	        AppDispatcher.handleAction({
 	            actionType: appConstants.ADD_FAVORITE,
@@ -11580,7 +11597,8 @@ webpackJsonp([0],{
 
 	var _store = {
 	    sayings: [],
-	    favoriteSayings: []
+	    favoriteSayings: [],
+	    popularSayings: []
 	};
 
 	var setSaying = function (data) {
@@ -11591,12 +11609,16 @@ webpackJsonp([0],{
 	    return _store.favoriteSayings = data;
 	};
 
+	var setPopularSayings = function (data) {
+	    return _store.popularSayings = data;
+	};
+
 	var addSaying = function (item) {
 	    return _store.sayings.push(item);
 	};
 
 	var addLike = function (index) {
-	    return _store.sayings[index].saying.likes++;
+	    return _store.sayings[index].likes++;
 	};
 
 	var removeSaying = function (index) {
@@ -11614,11 +11636,15 @@ webpackJsonp([0],{
 	    },
 
 	    getSayingsCount: function getSayingsCount() {
-	        return _store.saying.length;
+	        return _store.sayings.length;
 	    },
 
 	    getFavoriteSayings: function getFavoriteSayings() {
 	        return _store.favoriteSayings;
+	    },
+
+	    getPopularSayings: function getPopularSayings() {
+	        return _store.popularSayings;
 	    },
 
 	    addChangeListener: function addChangeListener(cb) {
@@ -11657,6 +11683,10 @@ webpackJsonp([0],{
 	        case appConstants.DELETE_FAVORITE:
 	            deleteFavorite(action.data.index);
 	            sayingStore.emit(CHANGE_EVENT);
+	        case appConstants.GET_POPULAR:
+	            setPopularSayings(action.data.sayings);
+	            sayingStore.emit(CHANGE_EVENT);
+	            break;
 	        default:
 	            return true;
 	    }
@@ -12039,7 +12069,7 @@ webpackJsonp([0],{
 
 	        var thisSaying = this.state.sayings.map(function (item, index) {
 
-	          return React.createElement(Saying, { key: index, englishLiteral: item.saying.englishLiteral, onDelete: _this.handleDelete.bind(_this, index, item.key) });
+	          return React.createElement(Saying, { key: index, englishLiteral: item.englishLiteral, onDelete: _this.handleDelete.bind(_this, index, item.key) });
 	        });
 
 	        return React.createElement(
@@ -12157,7 +12187,6 @@ webpackJsonp([0],{
 
 	        _get(Object.getPrototypeOf(ExploreSayings.prototype), "constructor", this).call(this);
 	        this.state = { sayings: [], liked: false };
-	        this.handleSubmit = this.handleSubmit.bind(this);
 	        this.changeContent = this.changeContent.bind(this);
 	    }
 
@@ -12187,28 +12216,6 @@ webpackJsonp([0],{
 	                return sayingStore.getSayings();
 	            }
 	        },
-	        addSaying: {
-	            value: function addSaying(newSaying) {
-	                sayingActions.addItem({
-	                    saying: newSaying
-	                });
-	            }
-	        },
-	        handleSubmit: {
-	            value: function handleSubmit(e) {
-	                e.preventDefault();
-	                var newSaying = this.refs.newSaying.getDOMNode().value;
-	                if (newSaying !== "") {
-	                    this.addItem(newSaying);
-	                }
-	                this.refs.newSaying.getDOMNode().value = "";
-	            }
-	        },
-	        handleDelete: {
-	            value: function handleDelete(index, key) {
-	                sayingActions.removeSaying(index, key);
-	            }
-	        },
 	        nextSaying: {
 	            value: function nextSaying() {
 	                this.changeContent();
@@ -12222,37 +12229,37 @@ webpackJsonp([0],{
 	                        "div",
 	                        null,
 	                        "Likes: ",
-	                        item.saying.likes,
+	                        item.likes,
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.saying.author,
+	                            item.author,
 	                            ":"
 	                        ),
 	                        React.createElement(
 	                            "strong",
 	                            null,
-	                            item.saying.englishLiteral
+	                            item.englishLiteral
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.saying.meaning
+	                            item.meaning
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.saying.equivalentEnglishVersion
+	                            item.equivalentEnglishVersion
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.saying.originalSaying
+	                            item.originalSaying
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.saying.language
+	                            item.language
 	                        ),
 	                        React.createElement(Like, { index: index, fbKey: item.key })
 	                    );
@@ -12340,6 +12347,140 @@ webpackJsonp([0],{
 	})(React.Component);
 
 	module.exports = LikeButton;
+
+/***/ },
+
+/***/ 186:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+	var React = __webpack_require__(2);
+	var Saying = __webpack_require__(172);
+	var sayingActions = __webpack_require__(187);
+	var sayingStore = __webpack_require__(180);
+
+	var MostPopular = (function (_React$Component) {
+	    function MostPopular() {
+	        _classCallCheck(this, MostPopular);
+
+	        _get(Object.getPrototypeOf(MostPopular.prototype), "constructor", this).call(this);
+	        this.state = { sayings: [] };
+	        this.changeContent = this.changeContent.bind(this);
+	    }
+
+	    _inherits(MostPopular, _React$Component);
+
+	    _createClass(MostPopular, {
+	        componentDidMount: {
+	            value: function componentDidMount() {
+	                sayingStore.addChangeListener(this.changeContent);
+	                sayingActions.getSayings();
+	            }
+	        },
+	        componentWillUnmount: {
+	            value: function componentWillUnmount() {
+	                sayingStore.removeChangeListener(this.changeContent);
+	            }
+	        },
+	        changeContent: {
+	            value: function changeContent() {
+	                this.setState({
+	                    sayings: this.returnSayings()
+	                });
+	            }
+	        },
+	        returnSayings: {
+	            value: function returnSayings() {
+	                return sayingStore.getPopularSayings();
+	            }
+	        },
+	        render: {
+	            value: function render() {
+
+	                var sayings = this.state.sayings.map(function (item, index) {
+	                    return React.createElement(
+	                        "div",
+	                        null,
+	                        React.createElement(
+	                            "h3",
+	                            null,
+	                            item.englishLiteral
+	                        ),
+	                        React.createElement(
+	                            "p",
+	                            null,
+	                            "number of likes: ",
+	                            item.likes
+	                        ),
+	                        React.createElement(
+	                            "em",
+	                            null,
+	                            "-",
+	                            item.author
+	                        ),
+	                        React.createElement("hr", null)
+	                    );
+	                });
+
+	                return React.createElement(
+	                    "div",
+	                    { className: "container" },
+	                    React.createElement(
+	                        "h1",
+	                        null,
+	                        "Most Popular Sayings"
+	                    ),
+	                    React.createElement("hr", null),
+	                    sayings
+	                );
+	            }
+	        }
+	    });
+
+	    return MostPopular;
+	})(React.Component);
+
+	module.exports = MostPopular;
+
+/***/ },
+
+/***/ 187:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var AppDispatcher = __webpack_require__(175);
+	var appConstants = __webpack_require__(162);
+	var firebaseUtils = __webpack_require__(179);
+	var authUtils = __webpack_require__(160);
+
+	var storage = firebaseUtils.homeInstance().child("public").child("sayings");
+
+	var popularSayingActions = {
+	    getSayings: function getSayings() {
+	        storage.orderByChild("likes").limit(6).on("value", function (snapshot) {
+	            AppDispatcher.handleAction({
+	                actionType: appConstants.GET_POPULAR,
+	                data: {
+	                    sayings: firebaseUtils.toArray(snapshot.val()).sort(function (a, b) {
+	                        var x = a.likes > b.likes ? -1 : 1;
+	                        return x;
+	                    })
+	                }
+	            });
+	        });
+	    } };
+
+	module.exports = popularSayingActions;
 
 /***/ }
 

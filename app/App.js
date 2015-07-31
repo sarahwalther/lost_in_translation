@@ -12,7 +12,8 @@ let Saying = require('./components/saying/Saying');
 let AddSaying = require('./components/saying/AddSaying');
 let MyFavorites = require('./components/saying/MyFavorites');
 let ExploreSayings = require('./components/saying/ExploreSayings');
-let LikeButton = require('./components/saying/Like')
+let LikeButton = require('./components/saying/Like');
+let Popular = require('./components/saying/MostPopular');
 
 class App extends React.Component {
 
@@ -36,6 +37,10 @@ class App extends React.Component {
 
             case "myfavorites":
                 ui = myFavoritesRoute;
+                break;
+
+             case "popular":
+                ui = popularRoute;
                 break;
 
             case "login":
@@ -83,6 +88,12 @@ let myFavoritesRoute = (
     </div>
 );
 
+let popularRoute = (
+    <div>
+        <Navigation />
+        <Popular />
+    </div>
+);
 
 let loginRoute = (
     <div>

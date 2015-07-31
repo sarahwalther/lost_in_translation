@@ -6,18 +6,14 @@ let sayingStore = require('../../stores/sayingStore');
 class AddSaying extends React.Component {
 
     constructor() {
-      // super();
+      super();
       this.handleSubmit = this.handleSubmit.bind(this);
-      // this.changeContent = this.changeContent.bind(this);
     }
 
     addSaying(newSaying) {
-        sayingActions.addSaying({
-            saying: newSaying
-        });
+        sayingActions.addSaying(newSaying);
     }
 
-  // console.log(this)
   handleSubmit(e){
     e.preventDefault();
     var newSaying = {
@@ -28,7 +24,7 @@ class AddSaying extends React.Component {
       equivalentEnglishVersion: this.refs.equivalentEnglishVersion.getDOMNode().value,
       language: this.refs.language.getDOMNode().value,
       keyWords: this.refs.keyWords.getDOMNode().value,
-      likes: this.refs.likes.getDOMNode().value
+      likes: 0
     }
 
     this.addSaying(newSaying);
@@ -59,7 +55,6 @@ class AddSaying extends React.Component {
           <input type="checkbox" ref="keyWords" name="key_words" value="luck" />Luck
           <input type="checkbox" ref="keyWords" name="key_words" value="learning" />Learning
           <input type="checkbox" ref="keyWords" name="key_words" value="funny" />Funny
-          <input type="hidden" ref="likes" value="0" />
           <br></br><br></br>
           <input className="btn-alert" type="submit" />
         </form>

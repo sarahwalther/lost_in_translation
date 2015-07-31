@@ -13,7 +13,7 @@ let setSaying = (data) => _store.sayings = data;
 
 let addSaying = (item) => _store.sayings.push(item);
 
-let addLike = (index) => _store.sayings[index].saying.likes++ ;
+let addLike = (index) => _store.sayings[index].likes++ ;
 
 let removeSaying = (index) => _store.sayings.splice(index, 1);
 
@@ -21,7 +21,7 @@ let sayingStore = objectAssign({}, EventEmitter.prototype, {
 
     getSayings() { return _store.sayings; },
 
-    getSayingsCount() { return _store.saying.length },
+    getSayingsCount() { return _store.sayings.length; },
 
     addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
 

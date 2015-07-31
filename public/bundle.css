@@ -871,7 +871,8 @@ button {
   float: right;
   width: 65px;
   margin-top: -131px;
-  margin-right: 35px; }
+  margin-right: 35px;
+  cursor: pointer; }
 
 .flash-alert {
   background-color: #fff6bf;

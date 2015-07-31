@@ -38,7 +38,9 @@ class Navigation extends React.Component {
               <li className="nav-link">
                 <a onClick={this.handleLink.bind(this,'explore') }>Explore</a>
               </li>
-
+              <li className="nav-link">
+                <a onClick={this.handleLink.bind(this,'popular') }>Most Popular</a>
+              </li>
               <li className="nav-link more">
                 <a href="javascript:void(0)">More</a>
                 <ul className="submenu">

@@ -7,7 +7,8 @@ var appConstants = {
     ADD_LIKE: "ADD_LIKE",
     ADD_FAVORITE: "ADD_FAVORITE",
     GET_FAVORITES: "GET_FAVORITES",
-    DELETE_FAVORITE: "DELETE_FAVORITE"
+    DELETE_FAVORITE: "DELETE_FAVORITE",
+    GET_POPULAR: "GET_POPULAR"
 };
 
 module.exports = appConstants;

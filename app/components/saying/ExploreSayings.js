@@ -10,7 +10,6 @@ class ExploreSayings extends React.Component {
     constructor() {
         super();
         this.state = { sayings: [], liked: false };
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.changeContent = this.changeContent.bind(this);
     }
 
@@ -33,26 +32,6 @@ class ExploreSayings extends React.Component {
         return sayingStore.getSayings();
     }
 
-    addSaying(newSaying) {
-        sayingActions.addItem({
-            saying: newSaying
-        });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        let newSaying = this.refs.newSaying.getDOMNode().value;
-        if(newSaying !== "") {
-            this.addItem(newSaying);
-        }
-        this.refs.newSaying.getDOMNode().value = "";
-    }
-
-
-    handleDelete(index, key){
-        sayingActions.removeSaying(index, key);
-    }
-
     nextSaying(){
         this.changeContent();
     }
@@ -62,13 +41,13 @@ class ExploreSayings extends React.Component {
         let sayings = this.state.sayings.map((item,index) => {
             return (
                 <div>
-                    Likes: {item.saying.likes}
-                    <div>{item.saying.author}:</div>
-                    <strong>{item.saying.englishLiteral}</strong>
-                    <div>{item.saying.meaning}</div>
-                    <div>{item.saying.equivalentEnglishVersion}</div>
-                    <div>{item.saying.originalSaying}</div>
-                    <div>{item.saying.language}</div>
+                    Likes: {item.likes}
+                    <div>{item.author}:</div>
+                    <strong>{item.englishLiteral}</strong>
+                    <div>{item.meaning}</div>
+                    <div>{item.equivalentEnglishVersion}</div>
+                    <div>{item.originalSaying}</div>
+                    <div>{item.language}</div>
                     <Like index={index} fbKey={item.key} />
 
                 </div>

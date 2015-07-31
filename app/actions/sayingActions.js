@@ -37,9 +37,9 @@ let sayingActions = {
             index
         });
         storage.child(key).once('value', (snapshot) => {
-            updatedLikes = parseInt(snapshot.val().saying.likes)+1;
+            updatedLikes = parseInt(snapshot.val().likes)+1;
         });
-        storage.child(key).child('saying').update({likes: updatedLikes});
+        storage.child(key).update({likes: updatedLikes});
 
         AppDispatcher.handleAction({
             actionType: appConstants.ADD_FAVORITE,
