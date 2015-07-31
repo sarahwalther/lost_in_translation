@@ -577,12 +577,12 @@ table {
 th {
   border-bottom: 1px solid #b7b7b7;
   font-weight: 600;
-  padding: 0.375em 0;
+  padding: 0.375em 2em;
   text-align: left; }
 
 td {
   border-bottom: 1px solid #ddd;
-  padding: 0.375em 0; }
+  padding: 0.375em 2em; }
 
 tr, td, th {
   vertical-align: middle; }
@@ -655,6 +655,10 @@ section {
     width: 74.41059%; }
     section article:last-child {
       margin-right: 0; }
+
+h1 {
+  padding-left: 1em;
+  padding-top: 1em; }
 
 .centered-navigation {
   background-color: #D3BEDB;
@@ -835,6 +839,8 @@ section {
 
 .explore-container {
   text-align: center; }
+  .explore-container h1 {
+    padding-left: 0px; }
 
 .explore-saying {
   text-align: center;
