@@ -852,6 +852,12 @@ section {
   cursor: pointer;
   padding: 5px; }
 
+#next-button {
+  float: right;
+  width: 65px;
+  margin-top: -131px;
+  margin-right: 35px; }
+
 .flash-alert {
   background-color: #fff6bf;
   color: #8c7800;

@@ -5,7 +5,7 @@ let sayingStore = require('../../stores/sayingStore');
 
 let Like = require('./Like');
 
-class SayingContainer extends React.Component {
+class ExploreSayings extends React.Component {
 
     constructor() {
         super();
@@ -39,12 +39,6 @@ class SayingContainer extends React.Component {
         });
     }
 
-
-    handleClick(event) {
-
-        this.setState({liked: !this.state.liked});
-    }
-
     handleSubmit(e) {
         e.preventDefault();
         let newSaying = this.refs.newSaying.getDOMNode().value;
@@ -57,6 +51,10 @@ class SayingContainer extends React.Component {
 
     handleDelete(index, key){
         sayingActions.removeSaying(index, key);
+    }
+
+    nextSaying(){
+        this.changeContent();
     }
 
     render() {
@@ -80,7 +78,6 @@ class SayingContainer extends React.Component {
         let randomItem = sayings[Math.floor(Math.random()*sayings.length)];
 
 
-
         return (
 
             <div className="explore-container">
@@ -88,11 +85,12 @@ class SayingContainer extends React.Component {
 
 
                 <br />
-total: {sayings.length}
+
                 <div className="explore-saying">
 
                         { randomItem }
 
+                    <div id="next-button" onClick={this.nextSaying.bind(this)}><img src="/images/next.png"/></div>
                 </div>
 
 
@@ -103,4 +101,4 @@ total: {sayings.length}
 
 }
 
-module.exports = SayingContainer;
+module.exports = ExploreSayings;
