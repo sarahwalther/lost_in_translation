@@ -44,7 +44,13 @@ class MyFavorites extends React.Component {
 
         return (
 
-             <Saying key={index} englishLiteral={item.englishLiteral} onDelete={this.handleDelete.bind(this, index, item.key)}/>
+             <Saying key={index}
+             englishLiteral={item.englishLiteral}
+             meaning={item.meaning}
+             originalSaying={item.originalSaying}
+             equivalentEnglishVersion={item.equivalentEnglishVersion}
+             language={item.language}
+             onDelete={this.handleDelete.bind(this, index, item.key)}/>
         )
     });
 
