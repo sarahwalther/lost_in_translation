@@ -55,11 +55,13 @@ class AddSaying extends React.Component {
           <input type="checkbox" ref="keyWords" name="key_words" value="frustration" />Frustration
           <input type="checkbox" ref="keyWords" name="key_words" value="lost" />Lost
           <input type="checkbox" ref="keyWords" name="key_words" value="confusion" />Confusion
+          <br></br>
           <input type="checkbox" ref="keyWords" name="key_words" value="luck" />Luck
           <input type="checkbox" ref="keyWords" name="key_words" value="learning" />Learning
           <input type="checkbox" ref="keyWords" name="key_words" value="funny" />Funny
           <input type="hidden" ref="likes" value="0" />
-          <input type="submit" />
+          <br></br><br></br>
+          <input className="btn-alert" type="submit" />
         </form>
       </div>
     )
