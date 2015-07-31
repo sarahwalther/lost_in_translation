@@ -88,9 +88,11 @@ class SayingContainer extends React.Component {
 
 
                 <br />
-
+total: {sayings.length}
                 <div className="explore-saying">
+
                         { randomItem }
+
                 </div>
 
 

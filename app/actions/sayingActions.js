@@ -51,25 +51,12 @@ let sayingActions = {
 
     },
 
-    getFavoriteSayings() {
-        userStorage.child(uid).child('likes').on('value', (snapshot) => {
-
-            AppDispatcher.handleAction({
-                actionType: appConstants.GET_FAVORITES,
-                data: {
-                    sayings: firebaseUtils.toArray(snapshot.val())
-                }
-            });
-        });
-    },
-
     removeSaying(index, key) {
         AppDispatcher.handleAction({
             actionType: appConstants.REMOVE_ITEM,
             data: index
         });
         storage.child(key).remove();
-
     }
 
 };

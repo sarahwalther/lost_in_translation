@@ -1081,7 +1081,8 @@ webpackJsonp([0],{
 	    REMOVE_ITEM: "REMOVE_ITEM",
 	    ADD_LIKE: "ADD_LIKE",
 	    ADD_FAVORITE: "ADD_FAVORITE",
-	    GET_FAVORITES: "GET_FAVORITES"
+	    GET_FAVORITES: "GET_FAVORITES",
+	    DELETE_FAVORITE: "DELETE_FAVORITE"
 	};
 
 	module.exports = appConstants;
@@ -1112,8 +1113,8 @@ webpackJsonp([0],{
 	var Saying = __webpack_require__(172);
 	var AddSaying = __webpack_require__(173);
 	var MyFavorites = __webpack_require__(182);
-	var ExploreSayings = __webpack_require__(183);
-	var LikeButton = __webpack_require__(184);
+	var ExploreSayings = __webpack_require__(184);
+	var LikeButton = __webpack_require__(185);
 
 	var App = (function (_React$Component) {
 	    function App() {
@@ -11154,18 +11155,6 @@ webpackJsonp([0],{
 	        });
 	    },
 
-	    getFavoriteSayings: function getFavoriteSayings() {
-	        userStorage.child(uid).child("likes").on("value", function (snapshot) {
-
-	            AppDispatcher.handleAction({
-	                actionType: appConstants.GET_FAVORITES,
-	                data: {
-	                    sayings: firebaseUtils.toArray(snapshot.val())
-	                }
-	            });
-	        });
-	    },
-
 	    removeSaying: function removeSaying(index, key) {
 	        AppDispatcher.handleAction({
 	            actionType: appConstants.REMOVE_ITEM,
@@ -11611,6 +11600,10 @@ webpackJsonp([0],{
 	    return _store.sayings.splice(index, 1);
 	};
 
+	var deleteFavorite = function (index) {
+	    return _store.favoriteSayings.splice(index, 1);
+	};
+
 	var sayingStore = objectAssign({}, EventEmitter.prototype, {
 
 	    getSayings: function getSayings() {
@@ -11658,6 +11651,9 @@ webpackJsonp([0],{
 	            setFavoriteSayings(action.data.sayings);
 	            sayingStore.emit(CHANGE_EVENT);
 	            break;
+	        case appConstants.DELETE_FAVORITE:
+	            deleteFavorite(action.data.index);
+	            sayingStore.emit(CHANGE_EVENT);
 	        default:
 	            return true;
 	    }
@@ -11990,7 +11986,7 @@ webpackJsonp([0],{
 
 	var React = __webpack_require__(2);
 	var Saying = __webpack_require__(172);
-	var sayingActions = __webpack_require__(174);
+	var sayingActions = __webpack_require__(183);
 	var sayingStore = __webpack_require__(180);
 
 	var MyFavorites = (function (_React$Component) {
@@ -12008,7 +12004,7 @@ webpackJsonp([0],{
 	    componentDidMount: {
 	      value: function componentDidMount() {
 	        sayingStore.addChangeListener(this.changeContent);
-	        sayingActions.getFavoriteSayings();
+	        sayingActions.getSayings();
 	      }
 	    },
 	    componentWillUnmount: {
@@ -12019,12 +12015,12 @@ webpackJsonp([0],{
 	    changeContent: {
 	      value: function changeContent() {
 	        this.setState({
-	          sayings: this.returnFavoriteSayings()
+	          sayings: this.returnSayings()
 	        });
 	      }
 	    },
-	    returnFavoriteSayings: {
-	      value: function returnFavoriteSayings() {
+	    returnSayings: {
+	      value: function returnSayings() {
 
 	        return sayingStore.getFavoriteSayings();
 	      }
@@ -12096,6 +12092,47 @@ webpackJsonp([0],{
 
 	"use strict";
 
+	var AppDispatcher = __webpack_require__(175);
+	var appConstants = __webpack_require__(162);
+	var firebaseUtils = __webpack_require__(179);
+	var authUtils = __webpack_require__(160);
+
+	var loggedIn = authUtils.isLoggedIn();
+	var uid = loggedIn && loggedIn.uid || "demo";
+
+	var storage = firebaseUtils.homeInstance().child("user").child(uid).child("likes");
+
+	var favoriteSayingsActions = {
+	    getSayings: function getSayings() {
+	        storage.on("value", function (snapshot) {
+	            AppDispatcher.handleAction({
+	                actionType: appConstants.GET_FAVORITES,
+	                data: {
+	                    sayings: firebaseUtils.toArray(snapshot.val())
+	                }
+	            });
+	        });
+	    },
+
+	    removeSaying: function removeSaying(index, key) {
+	        AppDispatcher.handleAction({
+	            actionType: appConstants.DELETE_FAVORITE,
+	            data: index
+	        });
+	        storage.child(key).remove();
+	    }
+
+	};
+
+	module.exports = favoriteSayingsActions;
+
+/***/ },
+
+/***/ 184:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
 	var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -12109,7 +12146,7 @@ webpackJsonp([0],{
 	var sayingActions = __webpack_require__(174);
 	var sayingStore = __webpack_require__(180);
 
-	var Like = __webpack_require__(184);
+	var Like = __webpack_require__(185);
 
 	var SayingContainer = (function (_React$Component) {
 	    function SayingContainer() {
@@ -12230,6 +12267,8 @@ webpackJsonp([0],{
 	                        "Explore Sayings"
 	                    ),
 	                    React.createElement("br", null),
+	                    "total: ",
+	                    sayings.length,
 	                    React.createElement(
 	                        "div",
 	                        { className: "explore-saying" },
@@ -12247,7 +12286,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 184:
+/***/ 185:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

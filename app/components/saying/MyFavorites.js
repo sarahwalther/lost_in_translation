@@ -1,6 +1,6 @@
 const React = require('react');
 let Saying = require('./Saying');
-let sayingActions = require('../../actions/sayingActions');
+let sayingActions = require('../../actions/favoriteSayingsActions');
 let sayingStore = require('../../stores/sayingStore');
 
 
@@ -14,7 +14,7 @@ class MyFavorites extends React.Component {
 
   componentDidMount() {
       sayingStore.addChangeListener(this.changeContent);
-      sayingActions.getFavoriteSayings();
+      sayingActions.getSayings();
   }
 
   componentWillUnmount() {
@@ -23,11 +23,11 @@ class MyFavorites extends React.Component {
 
   changeContent() {
     this.setState({
-      sayings: this.returnFavoriteSayings()
+      sayings: this.returnSayings()
     })
   }
 
-  returnFavoriteSayings() {
+  returnSayings() {
 
       return sayingStore.getFavoriteSayings();
   }

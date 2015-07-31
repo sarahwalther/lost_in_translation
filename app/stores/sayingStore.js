@@ -20,6 +20,8 @@ let addLike = (index) => _store.sayings[index].saying.likes++ ;
 
 let removeSaying = (index) => _store.sayings.splice(index, 1);
 
+let deleteFavorite = (index) => _store.favoriteSayings.splice(index, 1);
+
 let sayingStore = objectAssign({}, EventEmitter.prototype, {
 
     getSayings() { return _store.sayings; },
@@ -57,6 +59,9 @@ AppDispatcher.register(function(payload){
             setFavoriteSayings(action.data.sayings);
             sayingStore.emit(CHANGE_EVENT);
             break;
+        case appConstants.DELETE_FAVORITE:
+            deleteFavorite(action.data.index);
+            sayingStore.emit(CHANGE_EVENT);
         default:
             return true;
     }
