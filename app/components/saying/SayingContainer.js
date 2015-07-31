@@ -27,7 +27,7 @@ class SayingContainer extends React.Component {
 
     addSaying(newSaying) {
         sayingActions.addItem({
-            title: newSaying
+            saying: newSaying
         });
     }
 
@@ -45,7 +45,6 @@ class SayingContainer extends React.Component {
     }
 
     render() {
-        debugger
 
         let sayings = this.state.sayings.map((item,index) => {
             return (

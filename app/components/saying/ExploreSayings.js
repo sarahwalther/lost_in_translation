@@ -35,7 +35,7 @@ class SayingContainer extends React.Component {
 
     addSaying(newSaying) {
         sayingActions.addItem({
-            title: newSaying
+            saying: newSaying
         });
     }
 
@@ -64,13 +64,13 @@ class SayingContainer extends React.Component {
         let sayings = this.state.sayings.map((item,index) => {
             return (
                 <div>
-                    Likes: {item.title.likes}
-                    <div>{item.title.author}:</div>
-                    <strong>{item.title.englishLiteral}</strong>
-                    <div>{item.title.meaning}</div>
-                    <div>{item.title.equivalentEnglishVersion}</div>
-                    <div>{item.title.originalSaying}</div>
-                    <div>{item.title.language}</div>
+                    Likes: {item.saying.likes}
+                    <div>{item.saying.author}:</div>
+                    <strong>{item.saying.englishLiteral}</strong>
+                    <div>{item.saying.meaning}</div>
+                    <div>{item.saying.equivalentEnglishVersion}</div>
+                    <div>{item.saying.originalSaying}</div>
+                    <div>{item.saying.language}</div>
                     <Like index={index} fbKey={item.key} />
 
                 </div>

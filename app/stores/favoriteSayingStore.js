@@ -6,13 +6,10 @@ const EventEmitter = require('events').EventEmitter;
 const CHANGE_EVENT = 'change';
 
 let _store = {
-    sayings: [],
-    favoriteSayings: []
+    sayings: []
 };
 
 let setSaying = (data) => _store.sayings = data;
-
-let setFavoriteSayings = (data) => _store.favoriteSayings = data;
 
 let addSaying = (item) => _store.sayings.push(item);
 
@@ -25,8 +22,6 @@ let sayingStore = objectAssign({}, EventEmitter.prototype, {
     getSayings() { return _store.sayings; },
 
     getSayingsCount() { return _store.saying.length },
-
-    getFavoriteSayings() { return _store.favoriteSayings; },
 
     addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
 
@@ -51,10 +46,6 @@ AppDispatcher.register(function(payload){
             break;
         case appConstants.ADD_LIKE:
             addLike(action.index);
-            sayingStore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.GET_FAVORITES:
-            setFavoriteSayings(action.data.sayings);
             sayingStore.emit(CHANGE_EVENT);
             break;
         default:

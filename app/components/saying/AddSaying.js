@@ -13,7 +13,7 @@ class AddSaying extends React.Component {
 
     addSaying(newSaying) {
         sayingActions.addSaying({
-            title: newSaying
+            saying: newSaying
         });
     }
 

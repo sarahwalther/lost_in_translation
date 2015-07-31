@@ -1080,7 +1080,8 @@ webpackJsonp([0],{
 	    ADD_ITEM: "ADD_ITEM",
 	    REMOVE_ITEM: "REMOVE_ITEM",
 	    ADD_LIKE: "ADD_LIKE",
-	    ADD_FAVORITE: "ADD_FAVORITE"
+	    ADD_FAVORITE: "ADD_FAVORITE",
+	    GET_FAVORITES: "GET_FAVORITES"
 	};
 
 	module.exports = appConstants;
@@ -10951,34 +10952,42 @@ webpackJsonp([0],{
 	var React = __webpack_require__(2);
 
 	var Saying = (function (_React$Component) {
-	  function Saying() {
-	    _classCallCheck(this, Saying);
+	    function Saying() {
+	        _classCallCheck(this, Saying);
 
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
+	        if (_React$Component != null) {
+	            _React$Component.apply(this, arguments);
+	        }
 	    }
-	  }
 
-	  _inherits(Saying, _React$Component);
+	    _inherits(Saying, _React$Component);
 
-	  _createClass(Saying, {
-	    render: {
-	      value: function render() {
-	        return React.createElement(
-	          "div",
-	          null,
-	          React.createElement(
-	            "h1",
-	            null,
-	            "Explore"
-	          ),
-	          React.createElement("p", null)
-	        );
-	      }
-	    }
-	  });
+	    _createClass(Saying, {
+	        render: {
+	            value: function render() {
+	                return React.createElement(
+	                    "tr",
+	                    null,
+	                    React.createElement(
+	                        "td",
+	                        null,
+	                        this.props.englishLiteral
+	                    ),
+	                    React.createElement(
+	                        "td",
+	                        null,
+	                        React.createElement(
+	                            "button",
+	                            { className: "btn-alert", onClick: this.props.onDelete },
+	                            "X"
+	                        )
+	                    )
+	                );
+	            }
+	        }
+	    });
 
-	  return Saying;
+	    return Saying;
 	})(React.Component);
 
 	module.exports = Saying;
@@ -11015,7 +11024,7 @@ webpackJsonp([0],{
 	    addSaying: {
 	      value: function addSaying(newSaying) {
 	        sayingActions.addSaying({
-	          title: newSaying
+	          saying: newSaying
 	        });
 	      }
 	    },
@@ -11101,6 +11110,9 @@ webpackJsonp([0],{
 	var storage = firebaseUtils.homeInstance().child("public").child("sayings");
 	var userStorage = firebaseUtils.homeInstance().child("user");
 
+	var loggedIn = authUtils.isLoggedIn();
+	var uid = loggedIn && loggedIn.uid || "demo";
+
 	var sayingActions = {
 	    getSayings: function getSayings(sayings) {
 	        storage.on("value", function (snapshot) {
@@ -11129,9 +11141,9 @@ webpackJsonp([0],{
 	            index: index
 	        });
 	        storage.child(key).once("value", function (snapshot) {
-	            updatedLikes = snapshot.val().title.likes + 1;
+	            updatedLikes = parseInt(snapshot.val().saying.likes) + 1;
 	        });
-	        storage.child(key).child("title").update({ likes: updatedLikes });
+	        storage.child(key).child("saying").update({ likes: updatedLikes });
 
 	        AppDispatcher.handleAction({
 	            actionType: appConstants.ADD_FAVORITE,
@@ -11139,6 +11151,18 @@ webpackJsonp([0],{
 	        });
 	        storage.child(key).once("value", function (snapshot) {
 	            userStorage.child(uid).child("likes").push(snapshot.val());
+	        });
+	    },
+
+	    getFavoriteSayings: function getFavoriteSayings() {
+	        userStorage.child(uid).child("likes").on("value", function (snapshot) {
+
+	            AppDispatcher.handleAction({
+	                actionType: appConstants.GET_FAVORITES,
+	                data: {
+	                    sayings: firebaseUtils.toArray(snapshot.val())
+	                }
+	            });
 	        });
 	    },
 
@@ -11563,11 +11587,16 @@ webpackJsonp([0],{
 	var CHANGE_EVENT = "change";
 
 	var _store = {
-	    sayings: []
+	    sayings: [],
+	    favoriteSayings: []
 	};
 
 	var setSaying = function (data) {
 	    return _store.sayings = data;
+	};
+
+	var setFavoriteSayings = function (data) {
+	    return _store.favoriteSayings = data;
 	};
 
 	var addSaying = function (item) {
@@ -11575,7 +11604,7 @@ webpackJsonp([0],{
 	};
 
 	var addLike = function (index) {
-	    return _store.sayings[index].title.likes++;
+	    return _store.sayings[index].saying.likes++;
 	};
 
 	var removeSaying = function (index) {
@@ -11590,6 +11619,10 @@ webpackJsonp([0],{
 
 	    getSayingsCount: function getSayingsCount() {
 	        return _store.saying.length;
+	    },
+
+	    getFavoriteSayings: function getFavoriteSayings() {
+	        return _store.favoriteSayings;
 	    },
 
 	    addChangeListener: function addChangeListener(cb) {
@@ -11619,6 +11652,10 @@ webpackJsonp([0],{
 	            break;
 	        case appConstants.ADD_LIKE:
 	            addLike(action.index);
+	            sayingStore.emit(CHANGE_EVENT);
+	            break;
+	        case appConstants.GET_FAVORITES:
+	            setFavoriteSayings(action.data.sayings);
 	            sayingStore.emit(CHANGE_EVENT);
 	            break;
 	        default:
@@ -11962,7 +11999,6 @@ webpackJsonp([0],{
 
 	    _get(Object.getPrototypeOf(MyFavorites.prototype), "constructor", this).call(this);
 	    this.state = { sayings: [] };
-	    this.handleSubmit = this.handleSubmit.bind(this);
 	    this.changeContent = this.changeContent.bind(this);
 	  }
 
@@ -11972,7 +12008,7 @@ webpackJsonp([0],{
 	    componentDidMount: {
 	      value: function componentDidMount() {
 	        sayingStore.addChangeListener(this.changeContent);
-	        sayingActions.getSayings();
+	        sayingActions.getFavoriteSayings();
 	      }
 	    },
 	    componentWillUnmount: {
@@ -11980,38 +12016,17 @@ webpackJsonp([0],{
 	        sayingStore.removeChangeListener(this.changeContent);
 	      }
 	    },
-	    returnSaying: {
-	      value: function returnSaying() {
-	        return sayingStore.getSayings();
-	      }
-	    },
-	    addSaying: {
-	      value: function addSaying(newSaying) {
-	        sayingActions.addSaying({
-	          title: newSaying
+	    changeContent: {
+	      value: function changeContent() {
+	        this.setState({
+	          sayings: this.returnFavoriteSayings()
 	        });
 	      }
 	    },
-	    handleSubmit: {
-	      value: function handleSubmit(e) {
-	        e.preventDefault();
-	        var newSaying = {
-	          author: this.refs.author.getDOMNode().value,
-	          english_literal: this.refs.englishLiteral.getDOMNode().value,
-	          meaning: this.refs.meaning.getDOMNode().value,
-	          original_saying: this.refs.originalSaying.getDOMNode().value,
-	          language: this.refs.language.getDOMNode().value
-	          // key_words: this.refs.keyWords.getDOMNode().value
-	        };
+	    returnFavoriteSayings: {
+	      value: function returnFavoriteSayings() {
 
-	        this.addSaying(newSaying);
-
-	        this.refs.author.getDOMNode().value = "";
-	        this.refs.englishLiteral.getDOMNode().value = "";
-	        this.refs.meaning.getDOMNode().value = "";
-	        this.refs.originalSaying.getDOMNode().value = "";
-	        this.refs.language.getDOMNode().value = "";
-	        // this.refs.keyWords.getDOMNode().value = "";
+	        return sayingStore.getFavoriteSayings();
 	      }
 	    },
 	    handleDelete: {
@@ -12023,12 +12038,9 @@ webpackJsonp([0],{
 	      value: function render() {
 	        var _this = this;
 
-	        var thisSaying = this.state.sayings.map(function (currentSaying, index) {
-	          return React.createElement(
-	            "div",
-	            null,
-	            React.createElement(Saying, { key: index, currentSaying: currentSaying, onDelete: _this.handleDelete.bind(_this, currentSaying, item.key) })
-	          );
+	        var thisSaying = this.state.sayings.map(function (item, index) {
+
+	          return React.createElement(Saying, { key: index, englishLiteral: item.saying.englishLiteral, onDelete: _this.handleDelete.bind(_this, index, item.key) });
 	        });
 
 	        return React.createElement(
@@ -12068,13 +12080,6 @@ webpackJsonp([0],{
 	            )
 	          )
 	        );
-	      }
-	    },
-	    changeContent: {
-	      value: function changeContent() {
-	        this.setState({
-	          saying: this.returnSaying()
-	        });
 	      }
 	    }
 	  });
@@ -12145,7 +12150,7 @@ webpackJsonp([0],{
 	        addSaying: {
 	            value: function addSaying(newSaying) {
 	                sayingActions.addItem({
-	                    title: newSaying
+	                    saying: newSaying
 	                });
 	            }
 	        },
@@ -12178,37 +12183,37 @@ webpackJsonp([0],{
 	                        "div",
 	                        null,
 	                        "Likes: ",
-	                        item.title.likes,
+	                        item.saying.likes,
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.title.author,
+	                            item.saying.author,
 	                            ":"
 	                        ),
 	                        React.createElement(
 	                            "strong",
 	                            null,
-	                            item.title.englishLiteral
+	                            item.saying.englishLiteral
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.title.meaning
+	                            item.saying.meaning
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.title.equivalentEnglishVersion
+	                            item.saying.equivalentEnglishVersion
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.title.originalSaying
+	                            item.saying.originalSaying
 	                        ),
 	                        React.createElement(
 	                            "div",
 	                            null,
-	                            item.title.language
+	                            item.saying.language
 	                        ),
 	                        React.createElement(Like, { index: index, fbKey: item.key })
 	                    );

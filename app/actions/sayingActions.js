@@ -6,6 +6,9 @@ let authUtils = require('../utils/authUtils');
 let storage = firebaseUtils.homeInstance().child('public').child('sayings');
 let userStorage = firebaseUtils.homeInstance().child("user");
 
+let loggedIn = authUtils.isLoggedIn();
+let uid = (loggedIn && loggedIn.uid) || "demo";
+
 let sayingActions = {
     getSayings(sayings) {
         storage.on('value', (snapshot) => {
@@ -34,9 +37,9 @@ let sayingActions = {
             index
         });
         storage.child(key).once('value', (snapshot) => {
-            updatedLikes = snapshot.val().title.likes+1;
+            updatedLikes = parseInt(snapshot.val().saying.likes)+1;
         });
-        storage.child(key).child('title').update({likes: updatedLikes});
+        storage.child(key).child('saying').update({likes: updatedLikes});
 
         AppDispatcher.handleAction({
             actionType: appConstants.ADD_FAVORITE,
@@ -46,6 +49,18 @@ let sayingActions = {
             userStorage.child(uid).child("likes").push(snapshot.val());
         });
 
+    },
+
+    getFavoriteSayings() {
+        userStorage.child(uid).child('likes').on('value', (snapshot) => {
+
+            AppDispatcher.handleAction({
+                actionType: appConstants.GET_FAVORITES,
+                data: {
+                    sayings: firebaseUtils.toArray(snapshot.val())
+                }
+            });
+        });
     },
 
     removeSaying(index, key) {

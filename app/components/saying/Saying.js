@@ -4,10 +4,10 @@ class Saying extends React.Component {
 
   render() {
       return (
-        <div>
-          <h1>Explore</h1>
-            <p></p>
-        </div>
+        <tr>
+            <td>{this.props.englishLiteral}</td>
+            <td><button className="btn-alert" onClick={this.props.onDelete}>X</button></td>
+          </tr>
       )
   }
 }

@@ -8,13 +8,13 @@ let uid = (loggedIn && loggedIn.uid) || "demo";
 
 let storage = firebaseUtils.homeInstance().child('user').child(uid).child('sayings');
 
-let mySayingsActions = {
+let favoriteSayingsActions = {
     getSayings(sayings) {
-        storage.on('value', function(snapshot){
+        storage.on('value', (snapshot) => {
             AppDispatcher.handleAction({
                 actionType: appConstants.GET_DATA,
                 data: {
-                    list: firebaseUtils.toArray(snapshot.val())
+                    sayings: firebaseUtils.toArray(snapshot.val())
                 }
             });
         });
@@ -38,4 +38,4 @@ let mySayingsActions = {
 
 };
 
-module.exports = mySayingsActions;
+module.exports = favoriteSayingsActions;
