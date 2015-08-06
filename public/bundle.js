@@ -10724,7 +10724,7 @@ webpackJsonp([0],{
 	                            React.createElement(
 	                                "a",
 	                                { href: "#", onClick: this.handleToggle.bind(this) },
-	                                "Literal Translation"
+	                                "Original Saying"
 	                            ),
 	                            React.createElement(
 	                                "div",
@@ -10975,42 +10975,70 @@ webpackJsonp([0],{
 	var React = __webpack_require__(2);
 
 	var Saying = (function (_React$Component) {
-	    function Saying() {
-	        _classCallCheck(this, Saying);
+	  function Saying() {
+	    _classCallCheck(this, Saying);
 
-	        if (_React$Component != null) {
-	            _React$Component.apply(this, arguments);
-	        }
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
 	    }
+	  }
 
-	    _inherits(Saying, _React$Component);
+	  _inherits(Saying, _React$Component);
 
-	    _createClass(Saying, {
-	        render: {
-	            value: function render() {
-	                return React.createElement(
-	                    "tr",
-	                    null,
-	                    React.createElement(
-	                        "td",
-	                        null,
-	                        this.props.englishLiteral
-	                    ),
-	                    React.createElement(
-	                        "td",
-	                        null,
-	                        React.createElement(
-	                            "button",
-	                            { className: "btn-alert", onClick: this.props.onDelete },
-	                            "X"
-	                        )
-	                    )
-	                );
-	            }
-	        }
-	    });
+	  _createClass(Saying, {
+	    render: {
+	      value: function render() {
+	        return React.createElement(
+	          "tr",
+	          null,
+	          React.createElement(
+	            "td",
+	            null,
+	            React.createElement(
+	              "p",
+	              null,
+	              React.createElement(
+	                "strong",
+	                null,
+	                this.props.englishLiteral
+	              )
+	            ),
+	            React.createElement(
+	              "p",
+	              null,
+	              this.props.meaning
+	            ),
+	            React.createElement(
+	              "p",
+	              null,
+	              this.props.equivalentEnglishVersion
+	            ),
+	            React.createElement(
+	              "p",
+	              null,
+	              this.props.originalSaying
+	            ),
+	            React.createElement(
+	              "p",
+	              null,
+	              this.props.language
+	            )
+	          ),
+	          React.createElement(
+	            "td",
+	            null,
+	            React.createElement(
+	              "button",
+	              { className: "btn-alert", onClick: this.props.onDelete },
+	              "X"
+	            )
+	          )
+	        );
+	      }
+	    }
+	  });
 
-	    return Saying;
+	  return Saying;
 	})(React.Component);
 
 	module.exports = Saying;
@@ -12069,7 +12097,13 @@ webpackJsonp([0],{
 
 	        var thisSaying = this.state.sayings.map(function (item, index) {
 
-	          return React.createElement(Saying, { key: index, englishLiteral: item.englishLiteral, onDelete: _this.handleDelete.bind(_this, index, item.key) });
+	          return React.createElement(Saying, { key: index,
+	            englishLiteral: item.englishLiteral,
+	            meaning: item.meaning,
+	            originalSaying: item.originalSaying,
+	            equivalentEnglishVersion: item.equivalentEnglishVersion,
+	            language: item.language,
+	            onDelete: _this.handleDelete.bind(_this, index, item.key) });
 	        });
 
 	        return React.createElement(
@@ -12186,7 +12220,7 @@ webpackJsonp([0],{
 	        _classCallCheck(this, ExploreSayings);
 
 	        _get(Object.getPrototypeOf(ExploreSayings.prototype), "constructor", this).call(this);
-	        this.state = { sayings: [], liked: false };
+	        this.state = { sayings: [], liked: false, randomItem: {} };
 	        this.changeContent = this.changeContent.bind(this);
 	    }
 

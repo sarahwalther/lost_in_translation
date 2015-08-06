@@ -9,7 +9,7 @@ class ExploreSayings extends React.Component {
 
     constructor() {
         super();
-        this.state = { sayings: [], liked: false };
+        this.state = { sayings: [], liked: false, randomItem: {} };
         this.changeContent = this.changeContent.bind(this);
     }
 
@@ -55,6 +55,7 @@ class ExploreSayings extends React.Component {
         });
 
         let randomItem = sayings[Math.floor(Math.random()*sayings.length)];
+
 
 
         return (

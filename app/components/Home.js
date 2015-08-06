@@ -51,7 +51,7 @@ class Home extends React.Component {
                 <div>
                     <p>Don't play the offended liversausage.</p>
                     <div>
-                        <a href='#' onClick={this.handleToggle.bind(this)}>Literal Translation</a>
+                        <a href='#' onClick={this.handleToggle.bind(this)}>Original Saying</a>
                         <div style={styles.content}>
                             Spiel doch nicht die beleidigte Leberwurst.
                         </div>
